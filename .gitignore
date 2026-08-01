@@ -1,1 +1,6 @@
-git@github.com:suguru-3u/kotlin-task-lab-api.git
+.idea/
+.gradle
+build/
+*.iml
+
+.*/gradle/

@@ -1,37 +1,15 @@
+//apply false の主目的は「配置」、副次的に「バージョン集約」
+//
+//plugins {} ブロックは、宣言した時点でそのプラグインを ビルドスクリプトのクラスパスに載せます。apply false は「クラスパスには載せるが、このプロジェクトには適用しない」という意味です。
+//
+//つまりルートで apply false する第一の目的は、
+//
+//1. ルートプロジェクト自体には Spring Boot プラグインを適用しない（→ src の無いルートで :bootJar が失敗する問題が消える）
+//2. 子プロジェクトがバージョン指定なしで id("org.springframework.boot") と書けるようになる
+
 plugins {
-	kotlin("jvm") version "2.3.21"
-	kotlin("plugin.spring") version "2.3.21"
-	id("org.springframework.boot") version "4.1.0"
-	id("io.spring.dependency-management") version "1.1.7"
-}
-
-group = "com.example"
-version = "0.0.1-SNAPSHOT"
-
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
-}
-
-repositories {
-	mavenCentral()
-}
-
-dependencies {
-	implementation("org.springframework.boot:spring-boot-starter")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-kotlin {
-	compilerOptions {
-		freeCompilerArgs.addAll("-Xjsr305=strict", "-Xannotation-default-target=param-property")
-	}
-}
-
-tasks.withType<Test> {
-	useJUnitPlatform()
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.spring) apply false
+    alias(libs.plugins.spring.boot) apply false
+    alias(libs.plugins.spring.dependency.management) apply false
 }
