@@ -9,10 +9,23 @@ java {
     }
 }
 
+kotlin {
+    compilerOptions {
+        optIn.add("kotlin.uuid.ExperimentalUuidApi")
+    }
+}
+
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    // 依存ゼロ。Spring も JPA も入れない
+    // Spring も JPA も入れない。
+    // JSR-330 は JCP 標準仕様のアノテーション（6クラス・推移依存ゼロ）なので、
+    // @Named を付けても core は Guice / Dagger / CDI などにそのまま載せられる状態のまま。
+    //
+    // api ではなく implementation でよい。consumer が @Named をコンパイル時に見る必要はなく、
+    // Spring が実行時にアノテーションを読めればよい（implementation は runtimeClasspath には伝播する）。
+    implementation(libs.jakarta.inject.api)
 }

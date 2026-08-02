@@ -19,13 +19,17 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-webmvc")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("tools.jackson.module:jackson-module-kotlin")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation(libs.spring.boot.starter.webmvc)
+    implementation(libs.kotlin.reflect)
+    implementation(libs.jackson.module.kotlin)
+    implementation(project(":task-lab-core"))
+    runtimeOnly(project(":task-lab-infrastructure"))
+    developmentOnly(libs.spring.boot.devtools)
+    // 起動時に compose.yaml の MySQL を自動で up し、接続情報を自動注入する
+    developmentOnly(libs.spring.boot.docker.compose)
+    testImplementation(libs.spring.boot.starter.webmvc.test)
+    testImplementation(libs.kotlin.test.junit5)
+    testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 kotlin {
@@ -36,4 +40,10 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+// spring-boot-docker-compose は「カレントディレクトリの compose.yaml」を探す。
+// bootRun の既定は task-lab-api/ なので、compose.yaml を置いたリポジトリルートに向ける。
+tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
+    workingDir = rootProject.projectDir
 }
