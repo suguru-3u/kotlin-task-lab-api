@@ -14,13 +14,18 @@ class RegisterController(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun execute(@RequestBody request: Request) {
+        val request = Task.create(
+            title = request.title,
+            description = request.description
+        ).getOrElse {
+            throw IllegalArgumentException("Invalid request")
+        }
+
         // TODO: ここの例外処理を見直す。controllerのadviceのクラスを作成する
+        // このプロジェクトではKotlin Resultを採用した方が良さそう。
         try {
             val task = RegisterTaskUseCase.Input(
-                task = Task.create(
-                    title = request.title,
-                    description = request.description
-                )
+                task = request
             )
             registerTaskUseCase.execute(input = task)
         } catch (e: IllegalArgumentException) {

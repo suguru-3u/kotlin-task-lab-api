@@ -8,12 +8,14 @@ class Task private constructor(
     val description: TaskDescription,
 ) {
     companion object {
-        fun create(title: String, description: String): Task {
-            return Task(
-                id = Uuid.generateV7(),
-                title = TaskTitle(title),
-                description = TaskDescription(description)
-            )
+        fun create(title: String, description: String): Result<Task> {
+            return runCatching {
+                Task(
+                    id = Uuid.generateV7(),
+                    title = TaskTitle(title),
+                    description = TaskDescription(description)
+                )
+            }
         }
     }
 }
