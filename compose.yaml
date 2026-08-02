@@ -1,0 +1,23 @@
+# ローカル開発用の MySQL。
+# spring-boot-docker-compose により :task-lab-api の起動時に自動で up され、
+# 接続情報（URL / ユーザー / パスワード / ポート）も Spring に自動注入される。
+# そのため application.properties に spring.datasource.* を書く必要はない。
+name: task-lab
+
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: task_lab
+      MYSQL_USER: task_lab
+      MYSQL_PASSWORD: local_dev_only
+      MYSQL_ROOT_PASSWORD: local_dev_only
+    ports:
+      # 3306 は他プロジェクトのコンテナが使っていることがあるのでホスト側はずらす。
+      # Spring 側はコンテナから実際のマッピングを読むため、この番号を意識する必要はない。
+      - "13306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "127.0.0.1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
