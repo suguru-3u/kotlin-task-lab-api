@@ -28,4 +28,5 @@ dependencies {
     // api ではなく implementation でよい。consumer が @Named をコンパイル時に見る必要はなく、
     // Spring が実行時にアノテーションを読めればよい（implementation は runtimeClasspath には伝播する）。
     implementation(libs.jakarta.inject.api)
+    implementation(libs.kotlin.result)
 }

@@ -22,6 +22,7 @@ dependencies {
     implementation(libs.spring.boot.starter.webmvc)
     implementation(libs.kotlin.reflect)
     implementation(libs.jackson.module.kotlin)
+    implementation(libs.kotlin.result)
     implementation(project(":task-lab-core"))
     runtimeOnly(project(":task-lab-infrastructure"))
     developmentOnly(libs.spring.boot.devtools)

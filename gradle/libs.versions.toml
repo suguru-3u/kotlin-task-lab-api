@@ -47,4 +47,6 @@ testcontainers-junit-jupiter = { module = "org.testcontainers:testcontainers-jun
 # （Boot 4.1.0 の BOM も jakarta-inject.version = 2.0.1 なので値は揃っている）
 jakarta-inject-api = { module = "jakarta.inject:jakarta.inject-api", version = "2.0.1" }
 
+kotlin-result = { module = "com.michael-bull.kotlin-result:kotlin-result", version = "2.3.1" }
+
 [bundles]    # 複数ライブラリのグループ化。1行でまとめて依存追加できる
