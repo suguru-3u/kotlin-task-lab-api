@@ -25,7 +25,8 @@ internal class TaskRegisterJdbcAdapter(
             .addValue("title", task.title.value)
             .addValue("description", task.description.value)
 
-        jdbcTemplate.update(sql, params)
+        val resultRows = jdbcTemplate.update(sql, params)
+        check(resultRows != 1) { "Task insert failed. resultRows=$resultRows" }
     }
 
     /** kotlin.uuid.Uuid → MySQL BINARY(16)。java.util.UUID を経由しない */

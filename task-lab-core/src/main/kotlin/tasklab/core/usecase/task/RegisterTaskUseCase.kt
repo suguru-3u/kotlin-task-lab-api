@@ -6,7 +6,7 @@ import tasklab.core.domain.task.Task
 interface RegisterTaskUseCase {
     fun execute(
         input: Input
-    ): Result<Unit, Throwable>
+    ): Result<Unit, RegisterTaskInteractor.FailureRegisterTask>
 
     class Input(
         val task: Task,
