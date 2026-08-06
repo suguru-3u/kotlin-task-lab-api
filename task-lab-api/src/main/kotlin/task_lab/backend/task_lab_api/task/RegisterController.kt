@@ -32,7 +32,7 @@ class RegisterController(
     }
 
     // TODO: バリデーションエラーが発生した際にのエラーレスポンスをカスタマイズする
-    data class Request(
+    class Request(
         val title: String,
         val description: String,
     )

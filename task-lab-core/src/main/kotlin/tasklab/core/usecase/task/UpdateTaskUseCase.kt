@@ -1,13 +1,19 @@
 package tasklab.core.usecase.task
 
-import com.github.michaelbull.result.Result
+import kotlin.uuid.Uuid
 
 interface UpdateTaskUseCase {
 
-    fun execute(input: Input): Result<Unit, Throwable>
+    fun execute(input: Input): Output
 
     class Input(
-        val taskId: Long,
+        val taskId: Uuid,
+        val title: String,
+        val description: String,
+    )
+
+    class Output(
+        val taskId: Uuid,
         val title: String,
         val description: String,
     )
