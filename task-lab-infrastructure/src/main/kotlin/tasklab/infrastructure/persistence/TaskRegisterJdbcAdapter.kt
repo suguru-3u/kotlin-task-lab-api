@@ -21,7 +21,7 @@ internal class TaskRegisterJdbcAdapter(
         """.trimIndent()
 
         val params = MapSqlParameterSource()
-            .addValue("id", task.id.toBinary16())
+            .addValue("id", task.id.value.toBinary16())
             .addValue("title", task.title.value)
             .addValue("description", task.description.value)
 

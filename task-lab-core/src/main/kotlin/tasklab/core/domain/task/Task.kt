@@ -2,18 +2,27 @@ package tasklab.core.domain.task
 
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.runCatching
-import kotlin.uuid.Uuid
 
 class Task private constructor(
-    val id: Uuid,
+    val id: TaskId,
     val title: TaskTitle,
     val description: TaskDescription,
 ) {
     companion object {
-        fun create(title: String, description: String): Result<Task, Throwable> {
+        fun fromCreateRequest(title: String, description: String): Result<Task, Throwable> {
             return runCatching {
                 Task(
-                    id = Uuid.generateV7(),
+                    id = TaskId.create(),
+                    title = TaskTitle(title),
+                    description = TaskDescription(description)
+                )
+            }
+        }
+
+        fun fromUpdateRequest(id: String, title: String, description: String): Result<Task, Throwable> {
+            return runCatching {
+                Task(
+                    id = TaskId.fromString(id),
                     title = TaskTitle(title),
                     description = TaskDescription(description)
                 )

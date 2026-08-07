@@ -19,7 +19,7 @@ class RegisterController(
         // TODO: ここの例外処理を見直す。controllerのadviceのクラスを作成する
         // TODO: ログにloggerを使用するようにしてもいいかもしれない
         val task = RegisterTaskUseCase.Input(
-            task = Task.create(
+            task = Task.fromCreateRequest(
                 title = request.title,
                 description = request.description
             ).getOrElse {
