@@ -1,8 +1,8 @@
 package tasklab.core.port.task
 
 import tasklab.core.domain.task.Task
-import kotlin.uuid.Uuid
+import tasklab.core.domain.task.TaskId
 
 interface TaskFoundRepositoryPort {
-    fun execute(taskId: Uuid): Task
+    fun execute(taskId: TaskId): Task
 }

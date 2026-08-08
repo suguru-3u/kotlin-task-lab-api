@@ -28,5 +28,13 @@ class Task private constructor(
                 )
             }
         }
+
+        fun fromRepository(id: TaskId, title: String, description: String): Task {
+            return Task(
+                id = id,
+                title = TaskTitle(title),
+                description = TaskDescription(description)
+            )
+        }
     }
 }
