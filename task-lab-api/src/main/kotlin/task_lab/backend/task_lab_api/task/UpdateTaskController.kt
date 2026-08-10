@@ -1,6 +1,7 @@
 package task_lab.backend.task_lab_api.task
 
 import com.github.michaelbull.result.getOrElse
+import com.github.michaelbull.result.getOrThrow
 import org.springframework.web.bind.annotation.*
 import tasklab.core.domain.task.Task
 import tasklab.core.usecase.task.UpdateTaskUseCase
@@ -26,12 +27,14 @@ class UpdateTaskController(
                 throw IllegalArgumentException("Invalid request")
             }
         )
-        updateTaskUseCase.execute(input)
+        val result = updateTaskUseCase.execute(input).getOrThrow {
+            throw IllegalArgumentException("Invalid request")
+        }
 
         return Response(
-            taskId = taskId,
-            title = request.title,
-            description = request.description
+            taskId = result.taskId.toString(),
+            title = result.title,
+            description = result.description
         )
 
 

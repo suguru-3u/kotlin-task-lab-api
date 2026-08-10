@@ -1,13 +1,12 @@
 package tasklab.core.usecase.task
 
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.onErr
+import com.github.michaelbull.result.*
 import tasklab.core.domain.task.domainService.TaskFoundDomainService
+import tasklab.core.port.task.TaskUpdateRepositoryPort
 
 class UpdateTaskInteractor(
-    private val taskFoundDomainService: TaskFoundDomainService
+    private val taskFoundDomainService: TaskFoundDomainService,
+    private val taskUpdateRepositoryPort: TaskUpdateRepositoryPort
 ) : UpdateTaskUseCase {
     override fun execute(input: UpdateTaskUseCase.Input): Result<UpdateTaskUseCase.Output, FailureUpdateTask> {
 
@@ -15,13 +14,17 @@ class UpdateTaskInteractor(
             return Err(FailureUpdateTask)
         }
 
-        return Ok(
+        return runCatching {
+            taskUpdateRepositoryPort.execute(input.task)
             UpdateTaskUseCase.Output(
                 input.task.id.value,
                 input.task.title.value,
                 input.task.description.value,
             )
-        )
+
+        }.orElse {
+            Err(FailureUpdateTask)
+        }
     }
 
     data object FailureUpdateTask

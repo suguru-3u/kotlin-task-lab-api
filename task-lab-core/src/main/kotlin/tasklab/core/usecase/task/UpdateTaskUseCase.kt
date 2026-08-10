@@ -4,6 +4,8 @@ import com.github.michaelbull.result.Result
 import tasklab.core.domain.task.Task
 import kotlin.uuid.Uuid
 
+// TODO: パッケージ構成についても学ぶ必要がありそう。
+
 interface UpdateTaskUseCase {
 
     fun execute(input: Input): Result<Output, UpdateTaskInteractor.FailureUpdateTask>
