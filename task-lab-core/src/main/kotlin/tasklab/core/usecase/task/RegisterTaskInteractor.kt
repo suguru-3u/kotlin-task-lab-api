@@ -23,7 +23,7 @@ class RegisterTaskInteractor(
 ) : RegisterTaskUseCase {
     override fun execute(input: RegisterTaskUseCase.Input): Result<Unit, FailureRegisterTask> {
         return runCatching {
-            taskRegisterRepositoryPort.save(task = input.task)
+            taskRegisterRepositoryPort.execute(task = input.task)
         }.orElse {
             Err(FailureRegisterTask)
         }

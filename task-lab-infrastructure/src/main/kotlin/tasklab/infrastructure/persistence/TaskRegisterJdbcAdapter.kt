@@ -14,7 +14,7 @@ internal class TaskRegisterJdbcAdapter(
 ) : TaskRegisterRepositoryPort {
 
     @Transactional
-    override fun save(task: Task) {
+    override fun execute(task: Task) {
         val sql = """
             INSERT INTO tasks (id, title, description)
             VALUES (:id, :title, :description)
