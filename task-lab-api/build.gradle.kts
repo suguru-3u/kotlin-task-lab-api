@@ -18,6 +18,34 @@ repositories {
     mavenCentral()
 }
 
+
+// 結合テスト専用のソースセット。src/integrationTest/kotlin が対象になる                                                                                                                                                                                        ↑
+// （Kotlin プラグインが Java ソースセットごとに kotlin ディレクトリを自動で追加する）
+sourceSets {
+    create("integrationTest") {
+        compileClasspath += sourceSets.main.get().output
+        runtimeClasspath += sourceSets.main.get().output
+    }
+}
+
+// implementation / runtimeOnly は引き継ぐが developmentOnly は引き継がない。
+// spring-boot-docker-compose をテストのクラスパスに載せないため。
+val integrationTestImplementation: Configuration by configurations.getting {
+    extendsFrom(configurations.implementation.get())
+}
+val integrationTestRuntimeOnly: Configuration by configurations.getting {
+    extendsFrom(configurations.runtimeOnly.get())
+}
+
+val integrationTest = tasks.register<Test>("integrationTest") {
+    group = "verification"
+    description = "Testcontainers の MySQL を使った結合テストを実行する"
+    testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+    classpath = sourceSets["integrationTest"].runtimeClasspath
+    shouldRunAfter(tasks.named("test"))
+}
+
+
 dependencies {
     implementation(libs.spring.boot.starter.webmvc)
     implementation(libs.kotlin.reflect)
@@ -31,6 +59,13 @@ dependencies {
     testImplementation(libs.spring.boot.starter.webmvc.test)
     testImplementation(libs.kotlin.test.junit5)
     testRuntimeOnly(libs.junit.platform.launcher)
+
+    integrationTestImplementation(libs.spring.boot.starter.webmvc.test)  // MockMvc / JUnit5 / AssertJ
+    integrationTestImplementation(libs.spring.boot.testcontainers)       // @ServiceConnection
+    integrationTestImplementation(libs.testcontainers.mysql)             // MySQLContainer
+    integrationTestImplementation(libs.spring.boot.starter.jdbc)         // 検証用 JdbcTemplate（runtime にしか無いのでコンパイル用に明示）
+    integrationTestImplementation(libs.kotlin.test.junit5)
+    integrationTestRuntimeOnly(libs.junit.platform.launcher)
 }
 
 kotlin {
