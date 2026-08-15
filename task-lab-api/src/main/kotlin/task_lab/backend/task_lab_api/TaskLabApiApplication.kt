@@ -7,6 +7,7 @@ import org.springframework.boot.runApplication
     scanBasePackages = [
         "task_lab.backend.task_lab_api",   // 自モジュール（明示しないと既定スキャンが消える）
         "tasklab.core.usecase",            // JSR-330 の @Named が付いた Interactor を拾う
+        "tasklab.core.domain",             // ドメインモデルを拾う
         "tasklab.infrastructure",          // runtimeOnly なので文字列でしか指せない
     ]
 )

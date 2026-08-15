@@ -3,6 +3,7 @@ package tasklab.infrastructure.persistence
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 import tasklab.core.domain.task.Task
 import tasklab.core.domain.task.TaskId
 import tasklab.core.port.task.TaskFoundRepositoryPort
@@ -16,15 +17,14 @@ class TaskFoundJdbcAdapter(
     private val jdbcTemplate: NamedParameterJdbcTemplate
 ) : TaskFoundRepositoryPort {
 
+    @Transactional
     override fun execute(taskId: TaskId): Task {
-        val sql = """"
-            SELECT * FROM tasks WHERE task_id = ?
+        val sql = """
+            SELECT * FROM tasks WHERE id = :taskId
         """.trimIndent()
 
         val params = MapSqlParameterSource()
             .addValue("taskId", taskId.value.toBinary16())
-
-        val paramSource = MapSqlParameterSource()
 
         return jdbcTemplate.queryForObject(sql, params) { rs, _ ->
             Task.fromRepository(

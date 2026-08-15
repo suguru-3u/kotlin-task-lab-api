@@ -23,7 +23,7 @@ class TaskUpdateJdbcAdapter(
             .addValue("description", task.description.value)
 
         val resultRow = jdbcTemplate.update(sql, params)
-        check(resultRow != 1) { "Task update failed. resultRow=$resultRow" }
+        check(resultRow == 1) { "Task update failed. resultRow=$resultRow" }
     }
 
     private fun kotlin.uuid.Uuid.toBinary16(): ByteArray = toByteArray()

@@ -12,6 +12,7 @@ import kotlin.uuid.ExperimentalUuidApi
 class UpdateTaskController(
     private val updateTaskUseCase: UpdateTaskUseCase
 ) {
+    // TODO:スタイルガイドの導入を検討する
 
     @OptIn(ExperimentalUuidApi::class)
     @PutMapping("/{taskId}")
@@ -47,7 +48,7 @@ class UpdateTaskController(
 
 
     // TODO: クラスや関数のスコープについて学習する
-    class Response @OptIn(ExperimentalUuidApi::class) constructor(
+    class Response(
         val taskId: String,
         val title: String,
         val description: String,
