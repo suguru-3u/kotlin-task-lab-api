@@ -66,6 +66,7 @@ dependencies {
     integrationTestImplementation(libs.spring.boot.starter.jdbc)         // 検証用 JdbcTemplate（runtime にしか無いのでコンパイル用に明示）
     integrationTestImplementation(libs.kotlin.test.junit5)
     integrationTestRuntimeOnly(libs.junit.platform.launcher)
+    integrationTestImplementation(libs.kotest.assertions.core)
 }
 
 kotlin {

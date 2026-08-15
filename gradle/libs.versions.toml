@@ -6,6 +6,7 @@
 kotlin = "2.3.21"
 spring-boot = "4.1.0"
 spring-dependency-management = "1.1.7"
+kotest = "6.1.11"
 
 [plugins]    # Gradle プラグインの定義
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -48,5 +49,9 @@ testcontainers-junit-jupiter = { module = "org.testcontainers:testcontainers-jun
 jakarta-inject-api = { module = "jakarta.inject:jakarta.inject-api", version = "2.0.1" }
 
 kotlin-result = { module = "com.michael-bull.kotlin-result:kotlin-result", version = "2.3.1" }
+
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+kotest-extensions-spring = { module = "io.kotest:kotest-extensions-spring", version.ref = "kotest" }
 
 [bundles]    # 複数ライブラリのグループ化。1行でまとめて依存追加できる

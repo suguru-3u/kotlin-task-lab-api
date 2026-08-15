@@ -1,7 +1,7 @@
 package task_lab.backend.task_lab_api
 
+import io.kotest.matchers.shouldBe
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class TaskLabApiApplicationIntegrationTest : IntegrationTestBase() {
 
@@ -12,6 +12,6 @@ class TaskLabApiApplicationIntegrationTest : IntegrationTestBase() {
     @Test
     fun `Flyway のマイグレーションが適用され tasks テーブルが存在する`() {
         val count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM tasks", Int::class.java)
-        assertEquals(0, count)
+        count shouldBe 0
     }
 }
