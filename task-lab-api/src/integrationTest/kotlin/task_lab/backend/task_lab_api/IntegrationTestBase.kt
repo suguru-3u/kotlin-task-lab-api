@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Import
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.web.servlet.MockMvc
 
+// TODO: kotestとkotlin-test-junit5の違いを理解する
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @Import(MySqlContainerConfig::class)

@@ -67,6 +67,8 @@ dependencies {
     integrationTestImplementation(libs.kotlin.test.junit5)
     integrationTestRuntimeOnly(libs.junit.platform.launcher)
     integrationTestImplementation(libs.kotest.assertions.core)
+    integrationTestImplementation(libs.kotest.runner.junit5)
+    integrationTestImplementation(libs.kotest.extensions.spring)
 }
 
 kotlin {
