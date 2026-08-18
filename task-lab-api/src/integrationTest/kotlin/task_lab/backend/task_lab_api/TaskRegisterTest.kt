@@ -26,36 +26,39 @@ class TaskRegisterTest(
     val mockMvc: MockMvc,
     val objectMapper: ObjectMapper
 ) : FreeSpec({
+    // TODO:このthis asについて何をしているのか調べる
+    this as TaskRegisterTest
 
     "タスクが登録できること" {
 
-        val request = CreateTaskRequest(
-            title = "Test Task",
-            description = "This is a test task."
-        )
         val testDBTitle = "Test Task"
 
-        val beforeCount = jdbcTemplate.queryForObject(
-            "SELECT COUNT(*) FROM tasks WHERE title = ?",
-            Int::class.java,
-            testDBTitle
-        ) ?: 0
+        val request = CreateTaskRequest(
+            title = testDBTitle,
+            description = "This is a test task."
+        )
+
+        val beforeCount = getDBTask(testDBTitle)
         val result = mockMvc.post("/api/v1/tasks") {
             contentType = MediaType.APPLICATION_JSON
             content = objectMapper.writeValueAsString(request)
         }
-        val afterCount = jdbcTemplate.queryForObject(
-            "SELECT COUNT(*) FROM tasks WHERE title = ?",
-            Int::class.java,
-            testDBTitle
-        ) ?: 0
+        val afterCount = getDBTask(testDBTitle)
 
         result.andReturn().response.status shouldBe HttpStatus.CREATED.value()
         afterCount shouldBe beforeCount + 1
     }
 }) {
-    data class CreateTaskRequest(
+    private class CreateTaskRequest(
         val title: String,
         val description: String,
     )
+
+    private fun getDBTask(title: String): Int {
+        return jdbcTemplate.queryForObject(
+            "SELECT COUNT(*) FROM tasks WHERE title = ?",
+            Int::class.java,
+            title
+        ) ?: 0
+    }
 }
