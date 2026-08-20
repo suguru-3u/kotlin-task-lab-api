@@ -17,6 +17,7 @@ import tools.jackson.databind.ObjectMapper
 // TODO: テストコードの公式サイト、技術選定に関してmdファイルにまとめる
 // https://kotest.io/docs/framework/project-setup.html
 
+// TODO: なぜこの設定が必要なのか？　UTではなぜ不要なのか？
 @SpringBootTest
 @ApplyExtension(SpringExtension::class)
 @Import(MySqlContainerConfig::class)

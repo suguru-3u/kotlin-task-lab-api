@@ -60,6 +60,12 @@ dependencies {
     testImplementation(libs.kotlin.test.junit5)
     testRuntimeOnly(libs.junit.platform.launcher)
 
+    testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.kotest.runner.junit5)
+    testImplementation(libs.kotest.extensions.spring)
+    testImplementation("io.mockk:mockk:1.13.11")
+
+
     integrationTestImplementation(libs.spring.boot.starter.webmvc.test)  // MockMvc / JUnit5 / AssertJ
     integrationTestImplementation(libs.spring.boot.testcontainers)       // @ServiceConnection
     integrationTestImplementation(libs.testcontainers.mysql)             // MySQLContainer
