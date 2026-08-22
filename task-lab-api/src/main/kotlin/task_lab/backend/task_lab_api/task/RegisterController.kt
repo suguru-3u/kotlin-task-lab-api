@@ -2,6 +2,7 @@ package task_lab.backend.task_lab_api.task
 
 import com.github.michaelbull.result.getOrElse
 import com.github.michaelbull.result.getOrThrow
+import org.apache.coyote.BadRequestException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import tasklab.core.domain.task.Task
@@ -23,7 +24,7 @@ class RegisterController(
                 title = request.title,
                 description = request.description
             ).getOrElse {
-                throw IllegalArgumentException("Invalid request")
+                throw BadRequestException("Invalid request")
             }
         )
         registerTaskUseCase.execute(input = task).getOrThrow {
