@@ -29,4 +29,12 @@ dependencies {
     // Spring が実行時にアノテーションを読めればよい（implementation は runtimeClasspath には伝播する）。
     implementation(libs.jakarta.inject.api)
     implementation(libs.kotlin.result)
+
+    testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.kotest.runner.junit5)
+    testImplementation(libs.kotest.extensions.spring)
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
