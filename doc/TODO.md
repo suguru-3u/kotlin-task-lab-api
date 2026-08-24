@@ -2,30 +2,41 @@
 
 リポジトリ内に残っている TODO コメントの一覧です。各項目に、TODO コメントの原文と該当箇所のコードを記載しています。
 
-- 作成日: 2026-08-11
+- 更新日: 2026-08-23
 - 対象: リポジトリ全体（`.git` / `build` / `.gradle` / `.idea` を除く）
-- 件数: 14 件
+- 件数: 20 件（実装 11 件 / 学習 9 件）
 
 > 注: `README.md` 内の「TODO アプリ」という記述はアプリ名の一部であり、TODO コメントではないため除外しています。
 
+種別の意味:
+
+- **実装** … コードやドキュメントに手を入れて解消するタスク
+- **学習** … 仕組みや設計判断を理解するための調査メモ（コードは変わらないこともある）
+
 ## 目次
 
-| # | ファイル | 行 | 概要 |
-| --- | --- | --- | --- |
-| 1 | `task-lab-api/.../task/RegisterController.kt` | 19 | 例外処理の見直し・ControllerAdvice の作成 |
-| 2 | `task-lab-api/.../task/RegisterController.kt` | 20 | logger の導入 |
-| 3 | `task-lab-api/.../task/RegisterController.kt` | 34 | バリデーションエラーのレスポンスをカスタマイズ |
-| 4 | `task-lab-api/.../task/UpdateTaskController.kt` | 19 | 音声入力の対応 |
-| 5 | `task-lab-api/.../task/UpdateTaskController.kt` | 20 | ID の値オブジェクト化と Input クラスの作成 |
-| 6 | `task-lab-api/.../task/UpdateTaskController.kt` | 49 | クラス・関数のスコープの学習 |
-| 7 | `task-lab-api/.../TaskLabApiApplicationTests.kt` | 7 | Testcontainers 導入後に `@Disabled` を外す |
-| 8 | `task-lab-core/.../domainService/TaskFoundDomainService.kt` | 12 | タスク存在確認のドメインサービス作成 |
-| 9 | `task-lab-core/.../task/RegisterTaskInteractor.kt` | 19 | Kotlin-Result の使い方 |
-| 10 | `task-lab-core/.../task/RegisterTaskInteractor.kt` | 32 | sealed と object の使い分け |
-| 11 | `task-lab-core/.../task/UpdateTaskUseCase.kt` | 7 | パッケージ構成の学習 |
-| 12 | `task-lab-infrastructure/.../TaskFoundJdbcAdapter.kt` | 11 | 例外（非チェック例外）の扱い |
-| 13 | `task-lab-infrastructure/.../TaskFoundJdbcAdapter.kt` | 12 | ラムダ式の理解 |
-| 14 | `README.md` | 8 | プロジェクトのマイクロサービス化 |
+| # | 種別 | ファイル | 行 | 概要 |
+| --- | --- | --- | --- | --- |
+| 1 | 実装 | `task-lab-api/.../task/RegisterController.kt` | 20 | 例外処理の見直し・ControllerAdvice の作成 |
+| 2 | 実装 | `task-lab-api/.../task/RegisterController.kt` | 21 | logger の導入 |
+| 3 | 実装 | `task-lab-api/.../task/RegisterController.kt` | 35 | バリデーションエラーのレスポンスをカスタマイズ |
+| 4 | 実装 | `task-lab-api/.../task/TaskExceptionHandler.kt` | 12 | レスポンスの型の種類を整理する |
+| 5 | 実装 | `task-lab-api/.../task/UpdateTaskController.kt` | 15 | スタイルガイドの導入を検討 |
+| 6 | 実装 | `task-lab-api/.../task/UpdateTaskController.kt` | 20 | 音声入力の対応 |
+| 7 | 実装 | `task-lab-api/.../task/UpdateTaskController.kt` | 21 | ID の値オブジェクト化と Input クラスの作成 |
+| 8 | 学習 | `task-lab-api/.../task/UpdateTaskController.kt` | 50 | クラス・関数のスコープの学習 |
+| 9 | 実装 | `task-lab-core/.../domainService/TaskFoundDomainService.kt` | 12 | タスク存在確認のドメインサービス作成 |
+| 10 | 学習 | `task-lab-core/.../task/RegisterTaskInteractor.kt` | 19 | Kotlin-Result の使い方 |
+| 11 | 学習 | `task-lab-core/.../task/RegisterTaskInteractor.kt` | 32 | sealed と object の使い分け |
+| 12 | 学習 | `task-lab-core/.../task/UpdateTaskUseCase.kt` | 7 | パッケージ構成の学習 |
+| 13 | 学習 | `task-lab-infrastructure/.../TaskFoundJdbcAdapter.kt` | 12 | 例外（非チェック例外）の扱い |
+| 14 | 学習 | `task-lab-infrastructure/.../TaskFoundJdbcAdapter.kt` | 13 | ラムダ式の理解 |
+| 15 | 実装 | `task-lab-api/src/test/.../TaskLabApiApplicationTests.kt` | 7 | Testcontainers 導入後に `@Disabled` を外す |
+| 16 | 学習 | `task-lab-api/src/integrationTest/.../IntegrationTestBase.kt` | 11 | kotest と kotlin-test-junit5 の違い |
+| 17 | 実装 | `task-lab-api/src/integrationTest/.../TaskRegisterTest.kt` | 17 | テストの技術選定を md にまとめる |
+| 18 | 学習 | `task-lab-api/src/integrationTest/.../TaskRegisterTest.kt` | 20 | IT に必要な設定が UT で不要な理由 |
+| 19 | 学習 | `task-lab-api/src/integrationTest/.../TaskRegisterTest.kt` | 30 | `this as` が何をしているのか |
+| 20 | 実装 | `README.md` | 8 | プロジェクトのマイクロサービス化 |
 
 ---
 
@@ -33,10 +44,10 @@
 
 ### 1. 例外処理の見直し・ControllerAdvice の作成
 
-- ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/RegisterController.kt:19`
+- ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/RegisterController.kt:20`
 - TODO: `ここの例外処理を見直す。controllerのadviceのクラスを作成する`
 
-`getOrElse` / `getOrThrow` の中で `IllegalArgumentException` を直接投げており、失敗の種類にかかわらず同じ例外・同じメッセージになっている。`@RestControllerAdvice` で例外を集約してレスポンスへ変換する必要がある。
+> **対応状況: ほぼ完了** — `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/TaskExceptionHandler.kt` に `@RestControllerAdvice` が作成済みで、`IllegalArgumentException` / `BadRequestException` をハンドリングしている。残タスクは、Controller 側で `getOrElse` / `getOrThrow` から例外を投げ直している現在の書き方を見直すかどうかの判断と、不要になった TODO コメントの削除。
 
 ```kotlin
 fun execute(@RequestBody request: Request) {
@@ -47,7 +58,7 @@ fun execute(@RequestBody request: Request) {
             title = request.title,
             description = request.description
         ).getOrElse {
-            throw IllegalArgumentException("Invalid request")
+            throw BadRequestException("Invalid request")
         }
     )
     registerTaskUseCase.execute(input = task).getOrThrow {
@@ -58,17 +69,15 @@ fun execute(@RequestBody request: Request) {
 
 ### 2. logger の導入
 
-- ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/RegisterController.kt:20`
+- ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/RegisterController.kt:21`
 - TODO: `ログにloggerを使用するようにしてもいいかもしれない`
 
-上記 1 と同じ箇所。プロジェクト内では `TaskFoundDomainService` が `print` でログ出力しており、ロギング方針が定まっていない。
+現状ログ出力は `TaskFoundDomainService` の `print` のみで、Controller 層にはログがない。SLF4J などのロガー導入を検討する。
 
 ### 3. バリデーションエラーのレスポンスをカスタマイズ
 
-- ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/RegisterController.kt:34`
+- ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/RegisterController.kt:35`
 - TODO: `バリデーションエラーが発生した際にのエラーレスポンスをカスタマイズする`
-
-リクエストボディの `Request` クラスにバリデーションアノテーションが付いておらず、エラー時のレスポンス形式も未定義。
 
 ```kotlin
 // TODO: バリデーションエラーが発生した際にのエラーレスポンスをカスタマイズする
@@ -78,19 +87,44 @@ class Request(
 )
 ```
 
-### 4. 音声入力の対応
+`Request` にはまだ Bean Validation のアノテーションが付いておらず、バリデーションはドメイン層（`Task.fromCreateRequest`）で行われている。どちらで検証し、どう返すかを決める必要がある。項目 4 と関連。
 
-- ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/UpdateTaskController.kt:19`
-- TODO: `音声入力を使用できるようにしてもいいかも`
+### 4. レスポンスの型の種類を整理する
 
-機能追加のアイデアメモ。現状は JSON ボディでの更新のみ。
+- ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/TaskExceptionHandler.kt:12`
+- TODO: `レスポンスの型に種類がありそう`
 
-### 5. ID の値オブジェクト化と Input クラスの作成
+```kotlin
+@RestControllerAdvice
+class TaskExceptionHandler {
+
+    // TODO: レスポンスの型に種類がありそう
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleIllegalArgumentException(ex: IllegalArgumentException): ErrorResponse {
+        return ErrorResponse.create(ex, HttpStatus.INTERNAL_SERVER_ERROR, "サーバーでエラーが発生")
+    }
+```
+
+現在は Spring の `ErrorResponse` を返している。`ProblemDetail` / `ResponseEntity` / 独自クラスなどの選択肢を比較して方針を決める。項目 3 と関連。
+
+### 5. スタイルガイドの導入を検討
+
+- ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/UpdateTaskController.kt:15`
+- TODO: `スタイルガイドの導入を検討する`
+
+ktlint / detekt などの導入検討。`RegisterController` は `val`、`UpdateTaskController` は `private val` でコンストラクタ引数を受けているなど、モジュール間で書き方が揃っていない箇所がある。
+
+### 6. 音声入力の対応
 
 - ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/UpdateTaskController.kt:20`
-- TODO: `IDの値オブジェクトを作成して、Inputクラスを作成する`
+- TODO: `音声入力を使用できるようにしてもいいかも`
 
-`taskId` を `String` のままユースケースへ渡している。`TaskId` 値オブジェクトは `task-lab-core` に存在するため、コントローラー側でも活用する余地がある。
+アイデアレベルの機能案。
+
+### 7. ID の値オブジェクト化と Input クラスの作成
+
+- ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/UpdateTaskController.kt:21`
+- TODO: `IDの値オブジェクトを作成して、Inputクラスを作成する`
 
 ```kotlin
 fun execute(@PathVariable taskId: String, @RequestBody request: Request): Response {
@@ -105,55 +139,34 @@ fun execute(@PathVariable taskId: String, @RequestBody request: Request): Respon
             throw IllegalArgumentException("Invalid request")
         }
     )
-    // 以下略
-}
 ```
 
-### 6. クラス・関数のスコープの学習
+`tasklab.core.domain.task.TaskId` は既に存在するが、Controller では `taskId` を `String` のまま扱っている。
 
-- ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/UpdateTaskController.kt:49`
+### 8. クラス・関数のスコープの学習
+
+- ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/UpdateTaskController.kt:50`
 - TODO: `クラスや関数のスコープについて学習する`
-
-`Response` をネストクラスかつ public のまま定義していることに対する学習メモ。
 
 ```kotlin
 // TODO: クラスや関数のスコープについて学習する
-class Response @OptIn(ExperimentalUuidApi::class) constructor(
+class Response(
     val taskId: String,
     val title: String,
     val description: String,
 )
 ```
 
-### 7. Testcontainers 導入後に `@Disabled` を外す
-
-- ファイル: `task-lab-api/src/test/kotlin/task_lab/backend/task_lab_api/TaskLabApiApplicationTests.kt:7`
-- TODO: `Testcontainers を導入したら @Disabled を外す。`
-
-コメント内に理由も併記されている。`spring-boot-docker-compose` は `developmentOnly` でテストのクラスパスに載らず、載せても `spring.docker.compose.skip.in-tests` が既定 true のためコンテナが起動しない。結果として DataSource を生成できず、テストは必ず失敗する。
-
-```kotlin
-// TODO: Testcontainers を導入したら @Disabled を外す。
-//  spring-boot-docker-compose は developmentOnly のためテストのクラスパスに載らず、
-//  仮に載せても spring.docker.compose.skip.in-tests が既定 true なのでコンテナは起動しない。
-//  そのため現状このテストは DataSource を生成できず必ず失敗する。
-@Disabled("DataSource が必要。Testcontainers 導入後に有効化する")
-@SpringBootTest
-class TaskLabApiApplicationTests {
-    // 以下略
-}
-```
+Kotlin の可視性修飾子（`public` / `internal` / `protected` / `private`）とネストクラスの扱い。
 
 ---
 
 ## task-lab-core
 
-### 8. タスク存在確認のドメインサービス作成
+### 9. タスク存在確認のドメインサービス作成
 
 - ファイル: `task-lab-core/src/main/kotlin/tasklab/core/domain/task/domainService/TaskFoundDomainService.kt:12`
 - TODO: `タスクが存在するのか確認するドメインサービスを作成する`（補足: `先にインターフェースを作成する必要がありそう。`）
-
-クラス自体は実装済みだが、コメント 18〜20 行目に書かれた仕様のうち「2 件のタスクが見つかったらログを残してエラー型を返す」の分岐が未実装。
 
 ```kotlin
 // TODO: タスクが存在するのか確認するドメインサービスを作成する
@@ -165,18 +178,15 @@ class TaskFoundDomainService(
     // 2件のタスクが見つかったらログを残してエラー型を返す
     // そのほかの例外の場合、ログを残してエラー型を返す
     // 正常の場合、タスクをレスポンスする
-    fun execute(taskId: TaskId): Result<Task, FailureTaskNotFound> {
-        // 以下略
-    }
-}
+    fun execute(taskId: TaskId): Result<Task, FailureTaskNotFound> { ... }
 ```
 
-### 9. Kotlin-Result の使い方
+クラス本体は実装済み。残っているのは冒頭コメントにある「先にインターフェースを作成する」判断と、コメント内に書かれた「2 件見つかった場合」の分岐が未実装である点。
+
+### 10. Kotlin-Result の使い方
 
 - ファイル: `task-lab-core/src/main/kotlin/tasklab/core/usecase/task/RegisterTaskInteractor.kt:19`
 - TODO: `Kotlin-Resultの使い方〜`
-
-`runCatching` / `orElse` の組み合わせについての学習メモ。
 
 ```kotlin
 // TODO: Kotlin-Resultの使い方〜
@@ -191,55 +201,48 @@ class RegisterTaskInteractor(
             Err(FailureRegisterTask)
         }
     }
-}
 ```
 
-### 10. sealed と object の使い分け
+`com.github.michaelbull.result` の `runCatching` / `orElse` / `getOrElse` / `getOrThrow` の使い分け。
+
+### 11. sealed と object の使い分け
 
 - ファイル: `task-lab-core/src/main/kotlin/tasklab/core/usecase/task/RegisterTaskInteractor.kt:32`
 - TODO: `こういった場合にsealdなのかobjectを使用するのか判断できるようになりたい`
-
-エラー型を `data object` 1 つで表現しているが、失敗理由が増えた場合に `sealed interface` へ変えるべきかという判断基準の学習メモ。
 
 ```kotlin
 // TODO: こういった場合にsealdなのかobjectを使用するのか判断できるようになりたい
 data object FailureRegisterTask
 ```
 
-### 11. パッケージ構成の学習
+なお `TaskFoundDomainService` の `FailureTaskNotFound` は `object`、こちらは `data object` と書き方が揃っていないため、あわせて整理するとよい。
+
+### 12. パッケージ構成の学習
 
 - ファイル: `task-lab-core/src/main/kotlin/tasklab/core/usecase/task/UpdateTaskUseCase.kt:7`
 - TODO: `パッケージ構成についても学ぶ必要がありそう。`
-
-`UpdateTaskUseCase` インターフェースが実装クラス側のエラー型 `UpdateTaskInteractor.FailureUpdateTask` を参照しており、インターフェースが実装に依存する形になっている。
 
 ```kotlin
 // TODO: パッケージ構成についても学ぶ必要がありそう。
 
 interface UpdateTaskUseCase {
-
-    fun execute(input: Input): Result<Output, UpdateTaskInteractor.FailureUpdateTask>
-    // 以下略
-}
 ```
+
+現状は `domain` / `port` / `usecase` に分けたヘキサゴナル寄りの構成。`domainService` だけがキャメルケースであるなど命名も混在している。
 
 ---
 
 ## task-lab-infrastructure
 
-### 12. 例外（非チェック例外）の扱い
-
-- ファイル: `task-lab-infrastructure/src/main/kotlin/tasklab/infrastructure/persistence/TaskFoundJdbcAdapter.kt:11`
-- TODO: `発生する例外に対する対処方法わかっているのか？（非チェック例外の対処方法など）`
-
-`queryForObject` は結果が 0 件で `EmptyResultDataAccessException`、複数件で `IncorrectResultSizeDataAccessException` を投げる。これらは非チェック例外のためコンパイラが強制せず、アダプタ内では捕捉していない。
-
-### 13. ラムダ式の理解
+### 13. 例外（非チェック例外）の扱い
 
 - ファイル: `task-lab-infrastructure/src/main/kotlin/tasklab/infrastructure/persistence/TaskFoundJdbcAdapter.kt:12`
-- TODO: `ラムダ式について理解している？`
+- TODO: `発生する例外に対する対処方法わかっているのか？（非チェック例外の対処方法など）`
 
-`queryForObject` に渡す `RowMapper` を trailing lambda で書いている箇所についての学習メモ。
+### 14. ラムダ式の理解
+
+- ファイル: `task-lab-infrastructure/src/main/kotlin/tasklab/infrastructure/persistence/TaskFoundJdbcAdapter.kt:13`
+- TODO: `ラムダ式について理解している？`
 
 ```kotlin
 // TODO: 発生する例外に対する対処方法わかっているのか？（非チェック例外の対処方法など）
@@ -250,6 +253,7 @@ class TaskFoundJdbcAdapter(
     private val jdbcTemplate: NamedParameterJdbcTemplate
 ) : TaskFoundRepositoryPort {
 
+    @Transactional
     override fun execute(taskId: TaskId): Task {
         // 中略
         return jdbcTemplate.queryForObject(sql, params) { rs, _ ->
@@ -263,11 +267,93 @@ class TaskFoundJdbcAdapter(
 }
 ```
 
+`queryForObject` に渡している `RowMapper` の trailing lambda と、`EmptyResultDataAccessException` などの非チェック例外の扱いが対象。
+
+---
+
+## テスト
+
+### 15. Testcontainers 導入後に `@Disabled` を外す
+
+- ファイル: `task-lab-api/src/test/kotlin/task_lab/backend/task_lab_api/TaskLabApiApplicationTests.kt:7`
+- TODO: `Testcontainers を導入したら @Disabled を外す。`
+
+```kotlin
+// TODO: Testcontainers を導入したら @Disabled を外す。
+//  spring-boot-docker-compose は developmentOnly のためテストのクラスパスに載らず、
+//  仮に載せても spring.docker.compose.skip.in-tests が既定 true なのでコンテナは起動しない。
+//  そのため現状このテストは DataSource を生成できず必ず失敗する。
+@Disabled("DataSource が必要。Testcontainers 導入後に有効化する")
+@SpringBootTest
+class TaskLabApiApplicationTests {
+```
+
+> **補足**: `integrationTest` ソースセットでは `MySqlContainerConfig` により Testcontainers が既に動いている。この `src/test` 側の `contextLoads` を有効化するのか、IT 側に任せて削除するのかを決める。
+
+### 16. kotest と kotlin-test-junit5 の違い
+
+- ファイル: `task-lab-api/src/integrationTest/kotlin/task_lab/backend/task_lab_api/IntegrationTestBase.kt:11`
+- TODO: `kotestとkotlin-test-junit5の違いを理解する`
+
+```kotlin
+// TODO: kotestとkotlin-test-junit5の違いを理解する
+
+@SpringBootTest
+@AutoConfigureMockMvc
+@Import(MySqlContainerConfig::class)
+abstract class IntegrationTestBase {
+```
+
+`IntegrationTestBase` は JUnit5（`@BeforeEach`）ベース、`TaskRegisterTest` は kotest の `FreeSpec` ベースと 2 系統が混在している。項目 17 と関連。
+
+### 17. テストの技術選定を md にまとめる
+
+- ファイル: `task-lab-api/src/integrationTest/kotlin/task_lab/backend/task_lab_api/TaskRegisterTest.kt:17`
+- TODO: `テストコードの公式サイト、技術選定に関してmdファイルにまとめる`
+
+```kotlin
+// TODO: テストコードの公式サイト、技術選定に関してmdファイルにまとめる
+// https://kotest.io/docs/framework/project-setup.html
+```
+
+`doc/` 配下に UT / IT の使い分けとライブラリ選定理由をまとめるドキュメントを作成する。項目 16・18 の結論をここに集約するとよい。
+
+### 18. IT に必要な設定が UT で不要な理由
+
+- ファイル: `task-lab-api/src/integrationTest/kotlin/task_lab/backend/task_lab_api/TaskRegisterTest.kt:20`
+- TODO: `なぜこの設定が必要なのか？　UTではなぜ不要なのか？`
+
+```kotlin
+// TODO: なぜこの設定が必要なのか？　UTではなぜ不要なのか？
+@SpringBootTest
+@ApplyExtension(SpringExtension::class)
+@Import(MySqlContainerConfig::class)
+@AutoConfigureMockMvc
+class TaskRegisterTest(
+```
+
+`@SpringBootTest` によるコンテキスト起動と、kotest から Spring の DI を使うための `@ApplyExtension(SpringExtension::class)` が対象。`RegisterControllerTest`（UT）は MockMvc をスタンドアロンで組んでいるため不要、という点を確認する。
+
+### 19. `this as` が何をしているのか
+
+- ファイル: `task-lab-api/src/integrationTest/kotlin/task_lab/backend/task_lab_api/TaskRegisterTest.kt:30`
+- TODO: `このthis asについて何をしているのか調べる`
+
+```kotlin
+) : FreeSpec({
+    // TODO:このthis asについて何をしているのか調べる
+    this as TaskRegisterTest
+
+    "タスクが登録できること" {
+```
+
+`FreeSpec` のコンストラクタに渡すラムダのレシーバ型と、スマートキャストによってラムダ内から `jdbcTemplate` などのプロパティにアクセスできるようになる仕組み。
+
 ---
 
 ## プロジェクト全体
 
-### 14. マイクロサービス化
+### 20. マイクロサービス化
 
 - ファイル: `README.md:8`
 - TODO: `このプロジェクトをマイクロサービス化する対応を行いたい`
