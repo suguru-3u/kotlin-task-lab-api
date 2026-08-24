@@ -1,4 +1,4 @@
-package task_lab.backend.task_lab_api
+package task_lab.backend
 
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection

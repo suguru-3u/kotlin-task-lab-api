@@ -1,4 +1,4 @@
-package task_lab.backend.task_lab_api
+package task_lab.backend
 
 import io.kotest.core.extensions.ApplyExtension
 import io.kotest.core.spec.style.FreeSpec

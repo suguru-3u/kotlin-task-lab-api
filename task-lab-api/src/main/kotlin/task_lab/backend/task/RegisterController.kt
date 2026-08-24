@@ -1,4 +1,4 @@
-package task_lab.backend.task_lab_api.task
+package task_lab.backend.task
 
 import com.github.michaelbull.result.getOrElse
 import com.github.michaelbull.result.getOrThrow

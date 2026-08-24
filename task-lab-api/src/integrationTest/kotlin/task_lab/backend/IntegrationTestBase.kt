@@ -1,4 +1,4 @@
-package task_lab.backend.task_lab_api
+package task_lab.backend
 
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
