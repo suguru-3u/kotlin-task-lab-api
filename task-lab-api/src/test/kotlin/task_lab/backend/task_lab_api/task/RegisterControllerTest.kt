@@ -12,8 +12,8 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActionsDsl
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import tasklab.core.usecase.task.RegisterTaskInteractor
-import tasklab.core.usecase.task.RegisterTaskUseCase
+import tasklab.core.task.usecase.RegisterTaskInteractor
+import tasklab.core.task.usecase.RegisterTaskUseCase
 import tools.jackson.databind.ObjectMapper
 
 class RegisterControllerTest() : FreeSpec({

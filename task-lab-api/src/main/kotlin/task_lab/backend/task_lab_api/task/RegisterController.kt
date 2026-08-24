@@ -5,8 +5,8 @@ import com.github.michaelbull.result.getOrThrow
 import org.apache.coyote.BadRequestException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import tasklab.core.domain.task.Task
-import tasklab.core.usecase.task.RegisterTaskUseCase
+import tasklab.core.task.domain.Task
+import tasklab.core.task.usecase.RegisterTaskUseCase
 
 @RestController
 @RequestMapping("/api/v1/tasks")

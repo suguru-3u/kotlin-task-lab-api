@@ -4,8 +4,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
-import tasklab.core.domain.task.Task
-import tasklab.core.port.task.TaskRegisterRepositoryPort
+import tasklab.core.task.domain.Task
+import tasklab.core.task.port.TaskRegisterRepositoryPort
 import kotlin.uuid.Uuid
 
 @Repository

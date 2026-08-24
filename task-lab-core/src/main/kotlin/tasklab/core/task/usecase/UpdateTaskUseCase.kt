@@ -1,7 +1,7 @@
-package tasklab.core.usecase.task
+package tasklab.core.task.usecase
 
 import com.github.michaelbull.result.Result
-import tasklab.core.domain.task.Task
+import tasklab.core.task.domain.Task
 import kotlin.uuid.Uuid
 
 // TODO: パッケージ構成についても学ぶ必要がありそう。

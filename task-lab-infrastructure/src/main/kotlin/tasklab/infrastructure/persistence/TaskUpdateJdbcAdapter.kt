@@ -3,13 +3,14 @@ package tasklab.infrastructure.persistence
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Repository
-import tasklab.core.port.task.TaskUpdateRepositoryPort
+import tasklab.core.task.port.TaskUpdateRepositoryPort
+import tasklab.core.task.domain.Task
 
 @Repository
 class TaskUpdateJdbcAdapter(
     private val jdbcTemplate: NamedParameterJdbcTemplate
 ) : TaskUpdateRepositoryPort {
-    override fun execute(task: tasklab.core.domain.task.Task) {
+    override fun execute(task: Task) {
 
         val sql = """
             UPDATE tasks

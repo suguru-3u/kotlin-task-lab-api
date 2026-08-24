@@ -1,4 +1,4 @@
-package tasklab.core.domain.task
+package tasklab.core.task.domain
 
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.runCatching

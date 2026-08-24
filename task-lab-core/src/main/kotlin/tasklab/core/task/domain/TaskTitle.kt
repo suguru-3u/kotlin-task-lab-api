@@ -1,4 +1,4 @@
-package tasklab.core.domain.task
+package tasklab.core.task.domain
 
 @JvmInline
 value class TaskTitle(

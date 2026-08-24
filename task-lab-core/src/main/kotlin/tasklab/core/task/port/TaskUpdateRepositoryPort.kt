@@ -1,6 +1,6 @@
-package tasklab.core.port.task
+package tasklab.core.task.port
 
-import tasklab.core.domain.task.Task
+import tasklab.core.task.domain.Task
 
 interface TaskUpdateRepositoryPort {
     fun execute(task: Task)

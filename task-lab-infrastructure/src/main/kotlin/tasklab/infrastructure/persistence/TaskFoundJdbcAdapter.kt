@@ -4,9 +4,9 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
-import tasklab.core.domain.task.Task
-import tasklab.core.domain.task.TaskId
-import tasklab.core.port.task.TaskFoundRepositoryPort
+import tasklab.core.task.domain.Task
+import tasklab.core.task.domain.TaskId
+import tasklab.core.task.port.TaskFoundRepositoryPort
 import kotlin.uuid.Uuid
 
 // TODO: 発生する例外に対する対処方法わかっているのか？（非チェック例外の対処方法など）

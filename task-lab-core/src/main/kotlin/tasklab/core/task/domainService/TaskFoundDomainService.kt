@@ -1,13 +1,13 @@
-package tasklab.core.domain.task.domainService
+package tasklab.core.task.domainService
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.orElse
 import com.github.michaelbull.result.runCatching
 import jakarta.inject.Named
-import tasklab.core.domain.task.Task
-import tasklab.core.domain.task.TaskId
-import tasklab.core.port.task.TaskFoundRepositoryPort
+import tasklab.core.task.domain.Task
+import tasklab.core.task.domain.TaskId
+import tasklab.core.task.port.TaskFoundRepositoryPort
 
 // TODO: タスクが存在するのか確認するドメインサービスを作成する
 // 先にインターフェースを作成する必要がありそう。

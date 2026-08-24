@@ -1,9 +1,9 @@
-package tasklab.core.usecase.task
+package tasklab.core.task.usecase
 
 import com.github.michaelbull.result.*
 import jakarta.inject.Named
-import tasklab.core.domain.task.domainService.TaskFoundDomainService
-import tasklab.core.port.task.TaskUpdateRepositoryPort
+import tasklab.core.task.domainService.TaskFoundDomainService
+import tasklab.core.task.port.TaskUpdateRepositoryPort
 
 @Named
 class UpdateTaskInteractor(

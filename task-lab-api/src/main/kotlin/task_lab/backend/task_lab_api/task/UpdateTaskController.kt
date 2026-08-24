@@ -3,8 +3,8 @@ package task_lab.backend.task_lab_api.task
 import com.github.michaelbull.result.getOrElse
 import com.github.michaelbull.result.getOrThrow
 import org.springframework.web.bind.annotation.*
-import tasklab.core.domain.task.Task
-import tasklab.core.usecase.task.UpdateTaskUseCase
+import tasklab.core.task.domain.Task
+import tasklab.core.task.usecase.UpdateTaskUseCase
 import kotlin.uuid.ExperimentalUuidApi
 
 @RestController

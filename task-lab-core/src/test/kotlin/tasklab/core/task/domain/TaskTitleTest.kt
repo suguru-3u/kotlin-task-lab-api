@@ -1,4 +1,4 @@
-package tasklab.core.domain.task
+package tasklab.core.task.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
