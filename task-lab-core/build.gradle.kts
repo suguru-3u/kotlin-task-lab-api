@@ -34,6 +34,8 @@ dependencies {
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotest.extensions.spring)
     testImplementation("io.mockk:mockk:1.13.11")
+
+    testImplementation("com.tngtech.archunit:archunit-junit5:1.4.2")
 }
 
 tasks.withType<Test> {
