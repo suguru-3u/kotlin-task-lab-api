@@ -28,7 +28,7 @@ class TaskFoundJdbcAdapter(
 
         return jdbcTemplate.queryForObject(sql, params) { rs, _ ->
             Task.fromRepository(
-                id = taskId,
+                id = rs.getString("id"),
                 title = rs.getString("title"),
                 description = rs.getString("description")
             )
