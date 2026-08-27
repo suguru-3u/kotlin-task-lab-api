@@ -1,18 +1,25 @@
 package tasklab.infrastructure.persistence
 
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
+import org.springframework.stereotype.Repository
 import tasklab.core.task.domain.Task
-import tasklab.core.task.domain.TaskId
 import tasklab.core.task.port.GetTasksRepositoryPort
 
-class TaskGetJdbcAdapter : GetTasksRepositoryPort {
+@Repository
+class TaskGetJdbcAdapter(
+    private val jdbcTemplate: NamedParameterJdbcTemplate
+) : GetTasksRepositoryPort {
     override fun execute(): List<Task> {
-        // DBから情報を取得する処理を実装する
-        return listOf(
+        val sql = """"
+            SELECT * FROM tasks
+        """.trimIndent()
+
+        return jdbcTemplate.query(sql) { rs, _ ->
             Task.fromRepository(
-                id = TaskId.fromString("1"),
-                title = "Sample Task",
-                description = "This is a sample task.",
+                id = rs.getString("id"),
+                title = rs.getString("title"),
+                description = rs.getString("description"),
             )
-        )
+        }
     }
 }
