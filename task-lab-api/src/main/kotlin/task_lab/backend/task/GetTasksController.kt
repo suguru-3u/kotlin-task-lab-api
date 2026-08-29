@@ -10,28 +10,8 @@ import tasklab.core.task.usecase.GetTasksUseCase
 class GetTasksController(
     private val getTasksUseCase: GetTasksUseCase
 ) {
-
-    // ユースケースの作成
     @GetMapping
-    fun execute(): List<Task> {
-        getTasksUseCase.execute()
-        return listOf(
-            Task(
-                id = "1",
-                title = "Task 1",
-                description = "Description for Task 1"
-            ),
-            Task(
-                id = "2",
-                title = "Task 2",
-                description = "Description for Task 2"
-            )
-        )
+    fun execute(): List<GetTasksUseCase.Output> {
+        return getTasksUseCase.execute()
     }
-
-    class Task(
-        val id: String,
-        val title: String,
-        val description: String,
-    )
 }

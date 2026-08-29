@@ -1,9 +1,20 @@
 package tasklab.core.task.usecase
 
+import tasklab.core.task.port.GetTasksRepositoryPort
+import tasklab.core.task.usecase.GetTasksUseCase.Output
 
-class GetTasksInteractor : GetTasksUseCase {
 
-    override fun execute() {
-        // DBから情報を取得する処理を実装する
+class GetTasksInteractor(
+    private val getTasksRepositoryPort: GetTasksRepositoryPort
+) : GetTasksUseCase {
+
+    override fun execute(): List<Output> {
+        return getTasksRepositoryPort.execute().map {
+            Output(
+                id = it.id.value.toString(),
+                title = it.title.value,
+                description = it.description.value,
+            )
+        }
     }
 }
