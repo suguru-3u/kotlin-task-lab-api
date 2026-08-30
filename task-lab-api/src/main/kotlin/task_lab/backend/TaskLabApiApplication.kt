@@ -5,10 +5,9 @@ import org.springframework.boot.runApplication
 
 @SpringBootApplication(
     scanBasePackages = [
-        "task_lab.backend.task_lab_api",   // 自モジュール（明示しないと既定スキャンが消える）
-        "tasklab.core.usecase",            // JSR-330 の @Named が付いた Interactor を拾う
-        "tasklab.core.domain",             // ドメインモデルを拾う
-        "tasklab.infrastructure",          // runtimeOnly なので文字列でしか指せない
+        "task_lab.backend",        // 自モジュールの Controller などを拾う
+        "tasklab.core",            // JSR-330 の @Named が付いた Interactor などを拾う
+        "tasklab.infrastructure",  // runtimeOnly なので文字列でしか指せない
     ]
 )
 class TaskLabApiApplication

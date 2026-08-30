@@ -4,9 +4,9 @@ interface GetTasksUseCase {
 
     fun execute(): List<Output>
 
-    class Output(
-        private val id: String,
-        private val title: String,
-        private val description: String,
+    data class Output(
+        val id: String,
+        val title: String,
+        val description: String,
     )
 }
