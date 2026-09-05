@@ -9,6 +9,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
 import org.springframework.context.annotation.Import
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.delete
 import java.nio.ByteBuffer
 import java.util.*
 
@@ -22,9 +23,11 @@ class DeleteTaskControllerTest(
 ) : FreeSpec({
     this as DeleteTaskControllerTest
 
+    val taskId = "00000000-0000-7000-8000-000000000001"
+
     beforeSpec {
         deleteTask()
-        registerTask()
+        registerTask(uuidToBinary16(taskId))
     }
 
     afterSpec {
@@ -34,23 +37,24 @@ class DeleteTaskControllerTest(
     "正常系" - {
         "タスクが削除できること" {
             val before = getDBTask("Task 1")
+
             // act
-//            val result = mockMvc.get("/api/v1/tasks").andReturn()
+            val result = mockMvc.delete("/api/v1/tasks/${taskId}").andReturn()
             val after = getDBTask("Task 1")
 
-            // verify
-//            result.response.status shouldBe 204
+            // verify　TODO: UUidと自動採番についてまとめて記事に投稿する
+            result.response.status shouldBe 204
             after shouldBe before - 1
         }
     }
 
 
 }) {
-    private fun registerTask() {
+    private fun registerTask(taskId: ByteArray) {
         val sql = "INSERT INTO tasks (id, title, description) VALUES (?, ?, ?)"
         jdbcTemplate.update(
             sql,
-            uuidToBinary16("00000000-0000-7000-8000-000000000001"),
+            taskId,
             "Task 1",
             "Description 1"
         )
