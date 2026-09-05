@@ -28,7 +28,7 @@ class TaskFoundJdbcAdapter(
 
         return jdbcTemplate.queryForObject(sql, params) { rs, _ ->
             Task.fromRepository(
-                id = rs.getString("id"),
+                id = rs.getBytes("id").toUuid(),
                 title = rs.getString("title"),
                 description = rs.getString("description")
             )
@@ -37,4 +37,6 @@ class TaskFoundJdbcAdapter(
 
     /** kotlin.uuid.Uuid → MySQL BINARY(16)。java.util.UUID を経由しない */
     private fun Uuid.toBinary16(): ByteArray = toByteArray()
+
+    private fun ByteArray.toUuid(): String = Uuid.fromByteArray(this).toString()
 }
