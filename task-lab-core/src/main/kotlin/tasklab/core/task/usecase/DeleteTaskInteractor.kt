@@ -8,6 +8,7 @@ import jakarta.inject.Named
 import tasklab.core.task.domainService.TaskFoundDomainService
 import tasklab.core.task.port.DeleteTaskRepositoryPort
 
+// TODO:UuidをDBに保存するの見直してもいいかも
 @Named
 class DeleteTaskInteractor(
     private val taskFoundDomainService: TaskFoundDomainService,
