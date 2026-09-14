@@ -2,9 +2,12 @@ package task_lab.backend.task
 
 import org.apache.coyote.BadRequestException
 import org.springframework.http.HttpStatus
+import org.springframework.http.ProblemDetail
 import org.springframework.web.ErrorResponse
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+
+// TODO: ProblemDetailについて調べて調査する
 
 @RestControllerAdvice
 class TaskExceptionHandler {
@@ -16,7 +19,11 @@ class TaskExceptionHandler {
     }
 
     @ExceptionHandler(BadRequestException::class)
-    fun handleBadRequestException(ex: BadRequestException): ErrorResponse {
-        return ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, "不正なリクエストです")
+    fun handleBadRequestException(ex: BadRequestException): ProblemDetail {
+        // TODO: エラーについてログを出力するようにする。loggerとか？
+        return ProblemDetail.forStatus(HttpStatus.BAD_REQUEST).apply {
+            title = "Bad Request"
+            detail = "Invalid request"
+        }
     }
 }
