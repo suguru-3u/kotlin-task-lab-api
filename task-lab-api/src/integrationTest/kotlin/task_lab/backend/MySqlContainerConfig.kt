@@ -5,6 +5,8 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.springframework.context.annotation.Bean
 import org.testcontainers.mysql.MySQLContainer
 
+// TODO: kotestとkotlin-test-junit5の違いを理解する
+
 @TestConfiguration(proxyBeanMethods = false)
 class MySqlContainerConfig {
     @Bean

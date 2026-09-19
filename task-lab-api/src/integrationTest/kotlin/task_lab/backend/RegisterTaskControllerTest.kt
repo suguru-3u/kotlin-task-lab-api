@@ -22,13 +22,14 @@ import tools.jackson.databind.ObjectMapper
 @ApplyExtension(SpringExtension::class)
 @Import(MySqlContainerConfig::class)
 @AutoConfigureMockMvc
-class TaskRegisterTest(
+class RegisterTaskControllerTest(
     val jdbcTemplate: JdbcTemplate,
     val mockMvc: MockMvc,
     val objectMapper: ObjectMapper,
-) : FreeSpec({
+) : FreeSpec(
+    {
         // TODO:このthis asについて何をしているのか調べる
-        this as TaskRegisterTest
+        this as RegisterTaskControllerTest
 
         "タスクが登録できること" {
 
@@ -51,7 +52,8 @@ class TaskRegisterTest(
             result.andReturn().response.status shouldBe HttpStatus.CREATED.value()
             afterCount shouldBe beforeCount + 1
         }
-    }) {
+    },
+) {
     private class CreateTaskRequest(
         val title: String,
         val description: String,
