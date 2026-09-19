@@ -4,7 +4,6 @@ import io.kotest.matchers.shouldBe
 import kotlin.test.Test
 
 class TaskLabApiApplicationIntegrationTest : IntegrationTestBase() {
-
     @Test
     fun `Spring コンテキストが起動する`() {
     }

@@ -2,7 +2,11 @@ package task_lab.backend.task
 
 import com.github.michaelbull.result.getOrElse
 import com.github.michaelbull.result.getOrThrow
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import tasklab.core.task.domain.Task
 import tasklab.core.task.usecase.UpdateTaskUseCase
 import kotlin.uuid.ExperimentalUuidApi
@@ -10,42 +14,46 @@ import kotlin.uuid.ExperimentalUuidApi
 @RestController
 @RequestMapping("/api/v1/tasks")
 class UpdateTaskController(
-    private val updateTaskUseCase: UpdateTaskUseCase
+    private val updateTaskUseCase: UpdateTaskUseCase,
 ) {
     // TODO:スタイルガイドの導入を検討する
 
     @OptIn(ExperimentalUuidApi::class)
     @PutMapping("/{taskId}")
-    fun execute(@PathVariable taskId: String, @RequestBody request: Request): Response {
+    fun execute(
+        @PathVariable taskId: String,
+        @RequestBody request: Request,
+    ): Response {
         // TODO: 音声入力を使用できるようにしてもいいかも
         // TODO: IDの値オブジェクトを作成して、Inputクラスを作成する
-        val input = UpdateTaskUseCase.Input(
-            task = Task.fromUpdateRequest(
-                id = taskId,
-                title = request.title,
-                description = request.description
-            ).getOrElse {
+        val input =
+            UpdateTaskUseCase.Input(
+                task =
+                    Task
+                        .fromUpdateRequest(
+                            id = taskId,
+                            title = request.title,
+                            description = request.description,
+                        ).getOrElse {
+                            throw IllegalArgumentException("Invalid request")
+                        },
+            )
+        val result =
+            updateTaskUseCase.execute(input).getOrThrow {
                 throw IllegalArgumentException("Invalid request")
             }
-        )
-        val result = updateTaskUseCase.execute(input).getOrThrow {
-            throw IllegalArgumentException("Invalid request")
-        }
 
         return Response(
             taskId = result.taskId.toString(),
             title = result.title,
-            description = result.description
+            description = result.description,
         )
-
-
     }
 
     class Request(
         val title: String,
         val description: String,
     )
-
 
     // TODO: クラスや関数のスコープについて学習する
     class Response(

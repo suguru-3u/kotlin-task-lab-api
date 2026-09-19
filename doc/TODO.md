@@ -109,12 +109,18 @@ class TaskExceptionHandler {
 
 現在は Spring の `ErrorResponse` を返している。`ProblemDetail` / `ResponseEntity` / 独自クラスなどの選択肢を比較して方針を決める。項目 3 と関連。
 
-### 5. スタイルガイドの導入を検討
+### 5. スタイルガイドの導入を検討 → 完了
 
 - ファイル: `task-lab-api/src/main/kotlin/task_lab/backend/task_lab_api/task/UpdateTaskController.kt:15`
 - TODO: `スタイルガイドの導入を検討する`
 
-ktlint / detekt などの導入検討。`RegisterController` は `val`、`UpdateTaskController` は `private val` でコンストラクタ引数を受けているなど、モジュール間で書き方が揃っていない箇所がある。
+ktlint を導入済み。`.editorconfig` でルールを管理し、3 モジュールの `plugins {}` で `alias(libs.plugins.ktlint)` を適用している。
+`./gradlew build` で lint 違反が検出され、CI にも `ktlintCheck` の専用ステップを置いた。既存の表記揺れは `./gradlew ktlintFormat` で一括整形済み。
+
+残した論点は 2 つ。
+
+- detekt（静的解析）は入れていない。ktlint がフォーマット、detekt が複雑度・命名などの検出で役割が違うため、必要になった時点で別途検討する
+- `ktlint_standard_package-name` は無効化している。`task_lab.backend` のアンダースコアが違反になるが、解消はパッケージルート統一（項目 12 / ROADMAP Phase 6 段階 2）の作業になるため
 
 ### 6. 音声入力の対応
 

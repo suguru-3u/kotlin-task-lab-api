@@ -16,50 +16,50 @@ import tasklab.core.task.usecase.RegisterTaskInteractor
 import tasklab.core.task.usecase.RegisterTaskUseCase
 import tools.jackson.databind.ObjectMapper
 
-class RegisterControllerTest() : FreeSpec({
-    this as RegisterControllerTest
+class RegisterControllerTest :
+    FreeSpec({
+        this as RegisterControllerTest
 
-    "正常系" - {
-        "正常にタスクが登録できた場合" {
-            // ready
-            val mockMvc = buildSuccessMockMvc()
-            val request = successRequest()
+        "正常系" - {
+            "正常にタスクが登録できた場合" {
+                // ready
+                val mockMvc = buildSuccessMockMvc()
+                val request = successRequest()
 
-            // act
-            val result = requestMockApi(mockMvc, request)
+                // act
+                val result = requestMockApi(mockMvc, request)
 
-            // verify
-            result.andReturn().response.status shouldBe HttpStatus.CREATED.value()
-        }
-    }
-
-    "異常系" - {
-        "タスクを登録が失敗した場合" {
-            // ready
-            val mockMvc = buildFailMockMvc()
-            val request = successRequest()
-
-            // act
-            val result = requestMockApi(mockMvc, request)
-
-            // verify
-            result.andReturn().response.status shouldBe HttpStatus.INTERNAL_SERVER_ERROR.value()
+                // verify
+                result.andReturn().response.status shouldBe HttpStatus.CREATED.value()
+            }
         }
 
-        "タスク登録のリクエスト内容が不正な値だった場合" {
-            // ready
-            val mockMvc = buildFailMockMvc()
-            val request = failRequest()
+        "異常系" - {
+            "タスクを登録が失敗した場合" {
+                // ready
+                val mockMvc = buildFailMockMvc()
+                val request = successRequest()
 
-            // act
-            val result = requestMockApi(mockMvc, request)
+                // act
+                val result = requestMockApi(mockMvc, request)
 
-            // verify
-            result.andReturn().response.status shouldBe HttpStatus.BAD_REQUEST.value()
+                // verify
+                result.andReturn().response.status shouldBe HttpStatus.INTERNAL_SERVER_ERROR.value()
+            }
+
+            "タスク登録のリクエスト内容が不正な値だった場合" {
+                // ready
+                val mockMvc = buildFailMockMvc()
+                val request = failRequest()
+
+                // act
+                val result = requestMockApi(mockMvc, request)
+
+                // verify
+                result.andReturn().response.status shouldBe HttpStatus.BAD_REQUEST.value()
+            }
         }
-    }
-
-}) {
+    }) {
     class Request(
         val title: String,
         val description: String,
@@ -69,27 +69,26 @@ class RegisterControllerTest() : FreeSpec({
         val objectMapper = ObjectMapper()
     }
 
-    private fun successRequest(): Request {
-        return Request(
+    private fun successRequest(): Request =
+        Request(
             title = "Test Task",
-            description = "This is a test task."
+            description = "This is a test task.",
         )
-    }
 
-    private fun failRequest(): Request {
-        return Request(
+    private fun failRequest(): Request =
+        Request(
             title = "Test Task aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            description = "This is a test task."
+            description = "This is a test task.",
         )
-    }
 
     private fun buildSuccessMockMvc(): MockMvc {
         val registerTaskUseCase = mockk<RegisterTaskUseCase>()
         every { registerTaskUseCase.execute(any()) } returns Ok(Unit)
 
-        val registerController = RegisterController(
-            registerTaskUseCase = registerTaskUseCase
-        )
+        val registerController =
+            RegisterController(
+                registerTaskUseCase = registerTaskUseCase,
+            )
 
         return MockMvcBuilders.standaloneSetup(registerController).build()
     }
@@ -98,18 +97,20 @@ class RegisterControllerTest() : FreeSpec({
         val registerTaskUseCase = mockk<RegisterTaskUseCase>()
         every { registerTaskUseCase.execute(any()) } returns Err(RegisterTaskInteractor.FailureRegisterTask)
 
-        val registerController = RegisterController(
-            registerTaskUseCase = registerTaskUseCase
-        )
+        val registerController =
+            RegisterController(
+                registerTaskUseCase = registerTaskUseCase,
+            )
 
         return MockMvcBuilders.standaloneSetup(registerController).setControllerAdvice(TaskExceptionHandler()).build()
     }
 
-
-    private fun requestMockApi(mockMvc: MockMvc, request: Request): ResultActionsDsl {
-        return mockMvc.post("/api/v1/tasks") {
+    private fun requestMockApi(
+        mockMvc: MockMvc,
+        request: Request,
+    ): ResultActionsDsl =
+        mockMvc.post("/api/v1/tasks") {
             contentType = MediaType.APPLICATION_JSON
             content = objectMapper.writeValueAsString(request)
         }
-    }
 }

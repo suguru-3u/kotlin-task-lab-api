@@ -10,20 +10,21 @@ import kotlin.uuid.Uuid
 
 @Repository
 internal class TaskRegisterJdbcAdapter(
-    private val jdbcTemplate: NamedParameterJdbcTemplate
+    private val jdbcTemplate: NamedParameterJdbcTemplate,
 ) : TaskRegisterRepositoryPort {
-
     @Transactional
     override fun execute(task: Task) {
-        val sql = """
+        val sql =
+            """
             INSERT INTO tasks (id, title, description)
             VALUES (:id, :title, :description)
-        """.trimIndent()
+            """.trimIndent()
 
-        val params = MapSqlParameterSource()
-            .addValue("id", task.id.value.toBinary16())
-            .addValue("title", task.title.value)
-            .addValue("description", task.description.value)
+        val params =
+            MapSqlParameterSource()
+                .addValue("id", task.id.value.toBinary16())
+                .addValue("title", task.title.value)
+                .addValue("description", task.description.value)
 
         val resultRows = jdbcTemplate.update(sql, params)
         check(resultRows == 1) { "Task insert failed. resultRows=$resultRows" }

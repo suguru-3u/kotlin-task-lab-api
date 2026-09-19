@@ -1,7 +1,6 @@
 package tasklab.core.task.usecase
 
 interface GetTasksUseCase {
-
     fun execute(): List<Output>
 
     data class Output(

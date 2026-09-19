@@ -11,9 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest
 @Disabled("DataSource が必要。Testcontainers 導入後に有効化する")
 @SpringBootTest
 class TaskLabApiApplicationTests {
-
     @Test
     fun contextLoads() {
     }
-
 }

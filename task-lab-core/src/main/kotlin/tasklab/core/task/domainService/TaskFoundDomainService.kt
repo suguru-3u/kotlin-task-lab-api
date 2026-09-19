@@ -13,20 +13,20 @@ import tasklab.core.task.port.TaskFoundRepositoryPort
 // 先にインターフェースを作成する必要がありそう。
 @Named
 class TaskFoundDomainService(
-    private val taskFoundRepositoryPort: TaskFoundRepositoryPort
+    private val taskFoundRepositoryPort: TaskFoundRepositoryPort,
 ) {
     // 2件のタスクが見つかったらログを残してエラー型を返す
     // そのほかの例外の場合、ログを残してエラー型を返す
     // 正常の場合、タスクをレスポンスする
-    fun execute(taskId: TaskId): Result<Task, FailureTaskNotFound> {
-        return runCatching {
+    fun execute(taskId: TaskId): Result<Task, FailureTaskNotFound> =
+        runCatching {
             taskFoundRepositoryPort.execute(taskId)
         }.orElse {
+            // TODO:ログの処理を見直す、呼び出し元にレスポンスするようにした方がいいかも
             print("タスクが見つかりませんでした。taskId: ${taskId.value}")
             print("error: ${it.message}")
             Err(FailureTaskNotFound)
         }
-    }
 
     object FailureTaskNotFound
 }

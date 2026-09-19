@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.ktlint)
     `java-library`
 }
 
@@ -14,7 +15,6 @@ kotlin {
         optIn.add("kotlin.uuid.ExperimentalUuidApi")
     }
 }
-
 
 repositories {
     mavenCentral()

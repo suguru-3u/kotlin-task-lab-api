@@ -9,32 +9,40 @@ class Task private constructor(
     val description: TaskDescription,
 ) {
     companion object {
-        fun fromCreateRequest(title: String, description: String): Result<Task, Throwable> {
-            return runCatching {
+        fun fromCreateRequest(
+            title: String,
+            description: String,
+        ): Result<Task, Throwable> =
+            runCatching {
                 Task(
                     id = TaskId.create(),
                     title = TaskTitle(title),
-                    description = TaskDescription(description)
+                    description = TaskDescription(description),
                 )
             }
-        }
 
-        fun fromUpdateRequest(id: String, title: String, description: String): Result<Task, Throwable> {
-            return runCatching {
+        fun fromUpdateRequest(
+            id: String,
+            title: String,
+            description: String,
+        ): Result<Task, Throwable> =
+            runCatching {
                 Task(
                     id = TaskId.fromString(id),
                     title = TaskTitle(title),
-                    description = TaskDescription(description)
+                    description = TaskDescription(description),
                 )
             }
-        }
 
-        fun fromRepository(id: String, title: String, description: String): Task {
-            return Task(
+        fun fromRepository(
+            id: String,
+            title: String,
+            description: String,
+        ): Task =
+            Task(
                 id = TaskId.fromString(id),
                 title = TaskTitle(title),
-                description = TaskDescription(description)
+                description = TaskDescription(description),
             )
-        }
     }
 }

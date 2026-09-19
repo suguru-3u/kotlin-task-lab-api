@@ -17,25 +17,29 @@ object ImportedClasses {
     }
 }
 
-class ArchitectureTest : FreeSpec({
+class ArchitectureTest :
+    FreeSpec({
 
-    val importedClasses = ImportedClasses.production
+        val importedClasses = ImportedClasses.production
 
-    "ドメイン層はフレームワークに依存しない" {
-        noClasses()
-            .that().resideInAPackage("..domain..")
-            .should().dependOnClassesThat().resideInAnyPackage(
-                "org.springframework..",
-                "jakarta.persistence..",
-                "com.fasterxml.jackson.."
-            )
-            .check(importedClasses)
-    }
+        "ドメイン層はフレームワークに依存しない" {
+            noClasses()
+                .that()
+                .resideInAPackage("..domain..")
+                .should()
+                .dependOnClassesThat()
+                .resideInAnyPackage(
+                    "org.springframework..",
+                    "jakarta.persistence..",
+                    "com.fasterxml.jackson..",
+                ).check(importedClasses)
+        }
 
-    "パッケージ間に循環参照がない" {
-        slices()
-            .matching("tasklab.core.(*)..")
-            .should().beFreeOfCycles()
-            .check(importedClasses)
-    }
-})
+        "パッケージ間に循環参照がない" {
+            slices()
+                .matching("tasklab.core.(*)..")
+                .should()
+                .beFreeOfCycles()
+                .check(importedClasses)
+        }
+    })

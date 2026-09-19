@@ -33,6 +33,11 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      # ktlint は check タスクにフックされるため ./gradlew build でも走るが、
+      # 失敗理由が lint だと CI ログ上で一目で分かるよう専用ステップに切り出している
+      - name: Run ktlint check
+        run: ./gradlew ktlintCheck
+
       # task-lab-core:test / task-lab-infrastructure:test / task-lab-api:test がまとめて実行される
       - name: Run unit tests
         run: ./gradlew build

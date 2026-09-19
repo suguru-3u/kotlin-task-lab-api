@@ -7,7 +7,7 @@ interface GetTaskUseCase {
     fun execute(input: Input): Result<Output, GetTaskInteractor.FailureGetTask>
 
     class Input(
-        val taskId: TaskId
+        val taskId: TaskId,
     )
 
     class Output(

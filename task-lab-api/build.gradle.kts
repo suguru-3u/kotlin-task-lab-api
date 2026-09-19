@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
+    alias(libs.plugins.ktlint)
 }
 
 group = "task-lab.backend"
@@ -17,7 +18,6 @@ java {
 repositories {
     mavenCentral()
 }
-
 
 // 結合テスト専用のソースセット。src/integrationTest/kotlin が対象になる                                                                                                                                                                                        ↑
 // （Kotlin プラグインが Java ソースセットごとに kotlin ディレクトリを自動で追加する）
@@ -37,14 +37,14 @@ val integrationTestRuntimeOnly: Configuration by configurations.getting {
     extendsFrom(configurations.runtimeOnly.get())
 }
 
-val integrationTest = tasks.register<Test>("integrationTest") {
-    group = "verification"
-    description = "Testcontainers の MySQL を使った結合テストを実行する"
-    testClassesDirs = sourceSets["integrationTest"].output.classesDirs
-    classpath = sourceSets["integrationTest"].runtimeClasspath
-    shouldRunAfter(tasks.named("test"))
-}
-
+val integrationTest =
+    tasks.register<Test>("integrationTest") {
+        group = "verification"
+        description = "Testcontainers の MySQL を使った結合テストを実行する"
+        testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+        classpath = sourceSets["integrationTest"].runtimeClasspath
+        shouldRunAfter(tasks.named("test"))
+    }
 
 dependencies {
     implementation(libs.spring.boot.starter.webmvc)
@@ -65,11 +65,10 @@ dependencies {
     testImplementation(libs.kotest.extensions.spring)
     testImplementation("io.mockk:mockk:1.13.11")
 
-
-    integrationTestImplementation(libs.spring.boot.starter.webmvc.test)  // MockMvc / JUnit5 / AssertJ
-    integrationTestImplementation(libs.spring.boot.testcontainers)       // @ServiceConnection
-    integrationTestImplementation(libs.testcontainers.mysql)             // MySQLContainer
-    integrationTestImplementation(libs.spring.boot.starter.jdbc)         // 検証用 JdbcTemplate（runtime にしか無いのでコンパイル用に明示）
+    integrationTestImplementation(libs.spring.boot.starter.webmvc.test) // MockMvc / JUnit5 / AssertJ
+    integrationTestImplementation(libs.spring.boot.testcontainers) // @ServiceConnection
+    integrationTestImplementation(libs.testcontainers.mysql) // MySQLContainer
+    integrationTestImplementation(libs.spring.boot.starter.jdbc) // 検証用 JdbcTemplate（runtime にしか無いのでコンパイル用に明示）
     integrationTestImplementation(libs.kotlin.test.junit5)
     integrationTestRuntimeOnly(libs.junit.platform.launcher)
     integrationTestImplementation(libs.kotest.assertions.core)

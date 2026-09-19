@@ -9,6 +9,5 @@ import org.testcontainers.mysql.MySQLContainer
 class MySqlContainerConfig {
     @Bean
     @ServiceConnection
-    fun mysqlContainer(): MySQLContainer =
-        MySQLContainer("mysql:8.4").withDatabaseName("task_lab")
+    fun mysqlContainer(): MySQLContainer = MySQLContainer("mysql:8.4").withDatabaseName("task_lab")
 }

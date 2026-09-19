@@ -25,41 +25,42 @@ import tools.jackson.databind.ObjectMapper
 class TaskRegisterTest(
     val jdbcTemplate: JdbcTemplate,
     val mockMvc: MockMvc,
-    val objectMapper: ObjectMapper
+    val objectMapper: ObjectMapper,
 ) : FreeSpec({
-    // TODO:このthis asについて何をしているのか調べる
-    this as TaskRegisterTest
+        // TODO:このthis asについて何をしているのか調べる
+        this as TaskRegisterTest
 
-    "タスクが登録できること" {
+        "タスクが登録できること" {
 
-        val testDBTitle = "Test Task"
+            val testDBTitle = "Test Task"
 
-        val request = CreateTaskRequest(
-            title = testDBTitle,
-            description = "This is a test task."
-        )
+            val request =
+                CreateTaskRequest(
+                    title = testDBTitle,
+                    description = "This is a test task.",
+                )
 
-        val beforeCount = getDBTask(testDBTitle)
-        val result = mockMvc.post("/api/v1/tasks") {
-            contentType = MediaType.APPLICATION_JSON
-            content = objectMapper.writeValueAsString(request)
+            val beforeCount = getDBTask(testDBTitle)
+            val result =
+                mockMvc.post("/api/v1/tasks") {
+                    contentType = MediaType.APPLICATION_JSON
+                    content = objectMapper.writeValueAsString(request)
+                }
+            val afterCount = getDBTask(testDBTitle)
+
+            result.andReturn().response.status shouldBe HttpStatus.CREATED.value()
+            afterCount shouldBe beforeCount + 1
         }
-        val afterCount = getDBTask(testDBTitle)
-
-        result.andReturn().response.status shouldBe HttpStatus.CREATED.value()
-        afterCount shouldBe beforeCount + 1
-    }
-}) {
+    }) {
     private class CreateTaskRequest(
         val title: String,
         val description: String,
     )
 
-    private fun getDBTask(title: String): Int {
-        return jdbcTemplate.queryForObject(
+    private fun getDBTask(title: String): Int =
+        jdbcTemplate.queryForObject(
             "SELECT COUNT(*) FROM tasks WHERE title = ?",
             Int::class.java,
-            title
+            title,
         ) ?: 0
-    }
 }

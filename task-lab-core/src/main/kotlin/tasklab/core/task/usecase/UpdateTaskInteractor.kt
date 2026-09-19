@@ -1,6 +1,10 @@
 package tasklab.core.task.usecase
 
-import com.github.michaelbull.result.*
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.onErr
+import com.github.michaelbull.result.orElse
+import com.github.michaelbull.result.runCatching
 import jakarta.inject.Named
 import tasklab.core.task.domainService.TaskFoundDomainService
 import tasklab.core.task.port.TaskUpdateRepositoryPort
@@ -8,10 +12,9 @@ import tasklab.core.task.port.TaskUpdateRepositoryPort
 @Named
 class UpdateTaskInteractor(
     private val taskFoundDomainService: TaskFoundDomainService,
-    private val taskUpdateRepositoryPort: TaskUpdateRepositoryPort
+    private val taskUpdateRepositoryPort: TaskUpdateRepositoryPort,
 ) : UpdateTaskUseCase {
     override fun execute(input: UpdateTaskUseCase.Input): Result<UpdateTaskUseCase.Output, FailureUpdateTask> {
-
         taskFoundDomainService.execute(input.task.id).onErr {
             return Err(FailureUpdateTask)
         }
@@ -23,7 +26,6 @@ class UpdateTaskInteractor(
                 input.task.title.value,
                 input.task.description.value,
             )
-
         }.orElse {
             Err(FailureUpdateTask)
         }

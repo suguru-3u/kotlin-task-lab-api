@@ -14,23 +14,24 @@ import kotlin.uuid.Uuid
 
 @Repository
 class TaskFoundJdbcAdapter(
-    private val jdbcTemplate: NamedParameterJdbcTemplate
+    private val jdbcTemplate: NamedParameterJdbcTemplate,
 ) : TaskFoundRepositoryPort {
-
     @Transactional
     override fun execute(taskId: TaskId): Task {
-        val sql = """
+        val sql =
+            """
             SELECT * FROM tasks WHERE id = :taskId
-        """.trimIndent()
+            """.trimIndent()
 
-        val params = MapSqlParameterSource()
-            .addValue("taskId", taskId.value.toBinary16())
+        val params =
+            MapSqlParameterSource()
+                .addValue("taskId", taskId.value.toBinary16())
 
         return jdbcTemplate.queryForObject(sql, params) { rs, _ ->
             Task.fromRepository(
                 id = rs.getBytes("id").toUuid(),
                 title = rs.getString("title"),
-                description = rs.getString("description")
+                description = rs.getString("description"),
             )
         }
     }
