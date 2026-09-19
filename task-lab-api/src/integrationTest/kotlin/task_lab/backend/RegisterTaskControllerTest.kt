@@ -26,10 +26,8 @@ class RegisterTaskControllerTest(
     val jdbcTemplate: JdbcTemplate,
     val mockMvc: MockMvc,
     val objectMapper: ObjectMapper,
-) : FreeSpec(
-    {
-        // TODO:このthis asについて何をしているのか調べる
-        this as RegisterTaskControllerTest
+) : FreeSpec({
+        this as RegisterTaskControllerTest // TODO:このthis asについて何をしているのか調べる
 
         "タスクが登録できること" {
 
@@ -52,8 +50,7 @@ class RegisterTaskControllerTest(
             result.andReturn().response.status shouldBe HttpStatus.CREATED.value()
             afterCount shouldBe beforeCount + 1
         }
-    },
-) {
+    }) {
     private class CreateTaskRequest(
         val title: String,
         val description: String,
