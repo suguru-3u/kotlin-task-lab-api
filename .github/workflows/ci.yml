@@ -33,12 +33,14 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      # ktlint は check 経由で build に紐づくが、lint は Lint ワークフローの責務なので除外する。
-      # -x は指定タスクと「そのタスクのためだけに必要な依存」をまとめて外すため、
-      # ktlintMainSourceSetCheck 等の個別タスクも一緒にスキップされる。
+      # lint は Lint ワークフローの責務なので、ここでは走らせない。
+      # ただし build = assemble + check であり、ktlint-gradle は
+      # ktlint<SourceSet>SourceSetCheck を ktlintCheck だけでなく check にも直接ぶら下げる。
+      # -x ktlintCheck は「そのタスクのためだけに必要な依存」しか外さないので個別タスクが残ってしまう。
+      # そのため build ではなく、lint を含まない assemble（jar / bootJar）と test を直接指定する。
       # task-lab-core:test / task-lab-infrastructure:test / task-lab-api:test がまとめて実行される
       - name: Run unit tests
-        run: ./gradlew build -x ktlintCheck
+        run: ./gradlew assemble test
 
       - name: Run integration tests
         run: ./gradlew :task-lab-api:integrationTest
