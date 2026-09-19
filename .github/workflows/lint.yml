@@ -1,4 +1,4 @@
-name: CI Tests
+name: CI Lint
 
 # 実行するタイミング
 # 特定のブランチにのみ反応させる場合は branches を指定する
@@ -8,15 +8,13 @@ on:
 
 # 実際にテストを実行させる
 jobs:
-  test:
+  lint:
     # 実行する環境
-    # ubuntu-latest ランナーには Docker が標準搭載されているため、task-lab-infrastructure:test や integrationTest が使う Testcontainers はそのまま動く（追加セットアップ不要）
     # gradle/actions/setup-gradle@v4 が Gradle の依存関係キャッシュを自動で行うので、キャッシュ設定を別途書く必要はない
     runs-on: ubuntu-latest
     steps:
       # GitHub Actions のランナーは、ジョブ開始時点では空の仮想マシンで、リポジトリのコードは自動では置かれていません。
       # このステップがリポジトリの中身（このケースでは main や PR のブランチ）をランナー上にクローンして配置します。
-      # これがないと後続の ./gradlew build などが実行するソースコードが存在せず失敗します。
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -33,19 +31,13 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      # ktlint は check 経由で build に紐づくが、lint は Lint ワークフローの責務なので除外する。
-      # -x は指定タスクと「そのタスクのためだけに必要な依存」をまとめて外すため、
-      # ktlintMainSourceSetCheck 等の個別タスクも一緒にスキップされる。
-      # task-lab-core:test / task-lab-infrastructure:test / task-lab-api:test がまとめて実行される
-      - name: Run unit tests
-        run: ./gradlew build -x ktlintCheck
+      # Lint ワークフローの責務なので、ktlintCheck を実行する。
+      - name: Run ktlint check
+        run: ./gradlew ktlintCheck
 
-      - name: Run integration tests
-        run: ./gradlew :task-lab-api:integrationTest
-
-      - name: Upload test reports on failure
+      - name: Upload ktlint reports on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: test-reports
-          path: '**/build/reports/tests/**'
+          name: ktlint-reports
+          path: '**/build/reports/ktlint/**'
