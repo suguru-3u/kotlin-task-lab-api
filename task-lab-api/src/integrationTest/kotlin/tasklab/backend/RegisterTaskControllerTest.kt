@@ -1,4 +1,4 @@
-package task_lab.backend
+package tasklab.backend
 
 import io.kotest.core.extensions.ApplyExtension
 import io.kotest.core.spec.style.FreeSpec
@@ -26,7 +26,8 @@ class RegisterTaskControllerTest(
     val jdbcTemplate: JdbcTemplate,
     val mockMvc: MockMvc,
     val objectMapper: ObjectMapper,
-) : FreeSpec({
+) : FreeSpec(
+    {
         this as RegisterTaskControllerTest // TODO:このthis asについて何をしているのか調べる
 
         "タスクが登録できること" {
@@ -50,7 +51,8 @@ class RegisterTaskControllerTest(
             result.andReturn().response.status shouldBe HttpStatus.CREATED.value()
             afterCount shouldBe beforeCount + 1
         }
-    }) {
+    },
+) {
     private class CreateTaskRequest(
         val title: String,
         val description: String,

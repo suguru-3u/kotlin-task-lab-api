@@ -1,4 +1,4 @@
-package task_lab.backend.task
+package tasklab.backend.task
 
 import com.github.michaelbull.result.getOrThrow
 import org.springframework.web.bind.annotation.GetMapping

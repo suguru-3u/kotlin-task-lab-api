@@ -1,4 +1,4 @@
-package task_lab.backend.task
+package tasklab.backend.task
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
@@ -17,49 +17,51 @@ import tasklab.core.task.usecase.RegisterTaskUseCase
 import tools.jackson.databind.ObjectMapper
 
 class RegisterControllerTest :
-    FreeSpec({
-        this as RegisterControllerTest
+    FreeSpec(
+        {
+            this as RegisterControllerTest
 
-        "正常系" - {
-            "正常にタスクが登録できた場合" {
-                // ready
-                val mockMvc = buildSuccessMockMvc()
-                val request = successRequest()
+            "正常系" - {
+                "正常にタスクが登録できた場合" {
+                    // ready
+                    val mockMvc = buildSuccessMockMvc()
+                    val request = successRequest()
 
-                // act
-                val result = requestMockApi(mockMvc, request)
+                    // act
+                    val result = requestMockApi(mockMvc, request)
 
-                // verify
-                result.andReturn().response.status shouldBe HttpStatus.CREATED.value()
-            }
-        }
-
-        "異常系" - {
-            "タスクを登録が失敗した場合" {
-                // ready
-                val mockMvc = buildFailMockMvc()
-                val request = successRequest()
-
-                // act
-                val result = requestMockApi(mockMvc, request)
-
-                // verify
-                result.andReturn().response.status shouldBe HttpStatus.INTERNAL_SERVER_ERROR.value()
+                    // verify
+                    result.andReturn().response.status shouldBe HttpStatus.CREATED.value()
+                }
             }
 
-            "タスク登録のリクエスト内容が不正な値だった場合" {
-                // ready
-                val mockMvc = buildFailMockMvc()
-                val request = failRequest()
+            "異常系" - {
+                "タスクを登録が失敗した場合" {
+                    // ready
+                    val mockMvc = buildFailMockMvc()
+                    val request = successRequest()
 
-                // act
-                val result = requestMockApi(mockMvc, request)
+                    // act
+                    val result = requestMockApi(mockMvc, request)
 
-                // verify
-                result.andReturn().response.status shouldBe HttpStatus.BAD_REQUEST.value()
+                    // verify
+                    result.andReturn().response.status shouldBe HttpStatus.INTERNAL_SERVER_ERROR.value()
+                }
+
+                "タスク登録のリクエスト内容が不正な値だった場合" {
+                    // ready
+                    val mockMvc = buildFailMockMvc()
+                    val request = failRequest()
+
+                    // act
+                    val result = requestMockApi(mockMvc, request)
+
+                    // verify
+                    result.andReturn().response.status shouldBe HttpStatus.BAD_REQUEST.value()
+                }
             }
-        }
-    }) {
+        },
+    ) {
     class Request(
         val title: String,
         val description: String,

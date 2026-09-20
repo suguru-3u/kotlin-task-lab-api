@@ -1,4 +1,4 @@
-package task_lab.backend
+package tasklab.backend
 
 import io.kotest.core.extensions.ApplyExtension
 import io.kotest.core.spec.style.FreeSpec
@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.delete
 import java.nio.ByteBuffer
-import java.util.UUID
+import java.util.*
 
 @SpringBootTest
 @ApplyExtension(SpringExtension::class)
@@ -20,7 +20,8 @@ import java.util.UUID
 class DeleteTaskControllerTest(
     val jdbcTemplate: JdbcTemplate,
     val mockMvc: MockMvc,
-) : FreeSpec({
+) : FreeSpec(
+    {
         this as DeleteTaskControllerTest
 
         val taskId = "00000000-0000-7000-8000-000000000001"
@@ -47,7 +48,8 @@ class DeleteTaskControllerTest(
                 after shouldBe before - 1
             }
         }
-    }) {
+    },
+) {
     private fun registerTask(taskId: ByteArray) {
         val sql = "INSERT INTO tasks (id, title, description) VALUES (?, ?, ?)"
         jdbcTemplate.update(

@@ -1,4 +1,4 @@
-package task_lab.backend.task
+package tasklab.backend.task
 
 import org.apache.coyote.BadRequestException
 import org.slf4j.LoggerFactory

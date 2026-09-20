@@ -1,4 +1,4 @@
-package task_lab.backend
+package tasklab.backend
 
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test

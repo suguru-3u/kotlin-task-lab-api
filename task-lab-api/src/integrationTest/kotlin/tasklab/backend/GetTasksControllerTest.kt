@@ -1,4 +1,4 @@
-package task_lab.backend
+package tasklab.backend
 
 import io.kotest.core.extensions.ApplyExtension
 import io.kotest.core.spec.style.FreeSpec
@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import java.nio.ByteBuffer
-import java.util.UUID
+import java.util.*
 
 @SpringBootTest
 @ApplyExtension(SpringExtension::class)
@@ -20,7 +20,8 @@ import java.util.UUID
 class GetTasksControllerTest(
     val jdbcTemplate: JdbcTemplate,
     val mockMvc: MockMvc,
-) : FreeSpec({
+) : FreeSpec(
+    {
         this as GetTasksControllerTest
 
         beforeSpec {
@@ -43,7 +44,8 @@ class GetTasksControllerTest(
                 result.response.contentAsString.contains("Task 2") shouldBe true
             }
         }
-    }) {
+    },
+) {
     private fun deleteTasks() {
         jdbcTemplate.execute("DELETE FROM tasks")
     }
