@@ -7,7 +7,3 @@ root = true
 indent_size = 4
 ij_kotlin_allow_trailing_comma = true
 ij_kotlin_allow_trailing_comma_on_call_site = true
-
-# task_lab.backend 配下がアンダースコアを含む（doc/ROADMAP.md ギャップ9）。
-# 解消はパッケージルート統一（Phase 6 段階2）の作業なので、そこで有効化に戻す。
-ktlint_standard_package-name = disabled
