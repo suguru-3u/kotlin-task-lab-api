@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import java.nio.ByteBuffer
-import java.util.*
+import java.util.UUID
 
 @SpringBootTest
 @ApplyExtension(SpringExtension::class)
@@ -21,31 +21,31 @@ class GetTasksControllerTest(
     val jdbcTemplate: JdbcTemplate,
     val mockMvc: MockMvc,
 ) : FreeSpec(
-    {
-        this as GetTasksControllerTest
+        {
+            this as GetTasksControllerTest
 
-        beforeSpec {
-            deleteTasks()
-            insertTasks()
-        }
-
-        afterSpec {
-            deleteTasks()
-        }
-
-        "正常系" - {
-            "タスク一覧が取得できる場合" {
-                // act
-                val result = mockMvc.get("/api/v1/tasks").andReturn()
-
-                // verify
-                result.response.status shouldBe 200
-                result.response.contentAsString.contains("Task 1") shouldBe true
-                result.response.contentAsString.contains("Task 2") shouldBe true
+            beforeSpec {
+                deleteTasks()
+                insertTasks()
             }
-        }
-    },
-) {
+
+            afterSpec {
+                deleteTasks()
+            }
+
+            "正常系" - {
+                "タスク一覧が取得できる場合" {
+                    // act
+                    val result = mockMvc.get("/api/v1/tasks").andReturn()
+
+                    // verify
+                    result.response.status shouldBe 200
+                    result.response.contentAsString.contains("Task 1") shouldBe true
+                    result.response.contentAsString.contains("Task 2") shouldBe true
+                }
+            }
+        },
+    ) {
     private fun deleteTasks() {
         jdbcTemplate.execute("DELETE FROM tasks")
     }
