@@ -19,33 +19,33 @@ import java.util.UUID
 @AutoConfigureMockMvc
 class GetTasksControllerTest(
     val jdbcTemplate: JdbcTemplate,
-    val mockMvc: MockMvc,
+    val mockMvc: MockMvc
 ) : FreeSpec(
-        {
-            this as GetTasksControllerTest
+    {
+        this as GetTasksControllerTest
 
-            beforeSpec {
-                deleteTasks()
-                insertTasks()
+        beforeSpec {
+            deleteTasks()
+            insertTasks()
+        }
+
+        afterSpec {
+            deleteTasks()
+        }
+
+        "正常系" - {
+            "タスク一覧が取得できる場合" {
+                // act
+                val result = mockMvc.get("/api/v1/tasks").andReturn()
+
+                // verify
+                result.response.status shouldBe 200
+                result.response.contentAsString.contains("Task 1") shouldBe true
+                result.response.contentAsString.contains("Task 2") shouldBe true
             }
-
-            afterSpec {
-                deleteTasks()
-            }
-
-            "正常系" - {
-                "タスク一覧が取得できる場合" {
-                    // act
-                    val result = mockMvc.get("/api/v1/tasks").andReturn()
-
-                    // verify
-                    result.response.status shouldBe 200
-                    result.response.contentAsString.contains("Task 1") shouldBe true
-                    result.response.contentAsString.contains("Task 2") shouldBe true
-                }
-            }
-        },
-    ) {
+        }
+    }
+) {
     private fun deleteTasks() {
         jdbcTemplate.execute("DELETE FROM tasks")
     }
@@ -57,13 +57,13 @@ class GetTasksControllerTest(
                 arrayOf(
                     uuidToBinary16("00000000-0000-7000-8000-000000000001"),
                     "Task 1",
-                    "Description 1",
+                    "Description 1"
                 ),
                 arrayOf(
                     uuidToBinary16("00000000-0000-7000-8000-000000000002"),
                     "Task 2",
-                    "Description 2",
-                ),
+                    "Description 2"
+                )
             )
 
         jdbcTemplate.batchUpdate(sql, batchArgs)

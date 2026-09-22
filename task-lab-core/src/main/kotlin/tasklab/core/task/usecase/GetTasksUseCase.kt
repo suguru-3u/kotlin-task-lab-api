@@ -6,6 +6,6 @@ interface GetTasksUseCase {
     data class Output(
         val id: String,
         val title: String,
-        val description: String,
+        val description: String
     )
 }

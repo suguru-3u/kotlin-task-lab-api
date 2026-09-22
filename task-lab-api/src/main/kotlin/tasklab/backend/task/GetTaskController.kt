@@ -11,16 +11,16 @@ import tasklab.core.task.usecase.GetTaskUseCase
 @RestController
 @RequestMapping("/api/v1/tasks")
 class GetTaskController(
-    private val getTaskUseCase: GetTaskUseCase,
+    private val getTaskUseCase: GetTaskUseCase
 ) {
     @GetMapping("/{taskId}")
     fun execute(
-        @PathVariable taskId: String,
+        @PathVariable taskId: String
     ): Response {
         val input =
             runCatching {
                 GetTaskUseCase.Input(
-                    taskId = TaskId.fromString(taskId),
+                    taskId = TaskId.fromString(taskId)
                 )
             }.getOrElse {
                 throw IllegalArgumentException("Invalid taskId format: $taskId")
@@ -34,13 +34,13 @@ class GetTaskController(
         return Response(
             taskId = result.taskId,
             title = result.title,
-            description = result.description,
+            description = result.description
         )
     }
 
     class Response(
         val taskId: String,
         val title: String,
-        val description: String,
+        val description: String
     )
 }

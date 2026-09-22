@@ -14,7 +14,7 @@ import kotlin.uuid.ExperimentalUuidApi
 @RestController
 @RequestMapping("/api/v1/tasks")
 class UpdateTaskController(
-    private val updateTaskUseCase: UpdateTaskUseCase,
+    private val updateTaskUseCase: UpdateTaskUseCase
 ) {
     // TODO:スタイルガイドの導入を検討する
 
@@ -22,21 +22,21 @@ class UpdateTaskController(
     @PutMapping("/{taskId}")
     fun execute(
         @PathVariable taskId: String,
-        @RequestBody request: Request,
+        @RequestBody request: Request
     ): Response {
         // TODO: 音声入力を使用できるようにしてもいいかも
         // TODO: IDの値オブジェクトを作成して、Inputクラスを作成する
         val input =
             UpdateTaskUseCase.Input(
                 task =
-                    Task
-                        .fromUpdateRequest(
-                            id = taskId,
-                            title = request.title,
-                            description = request.description,
-                        ).getOrElse {
-                            throw IllegalArgumentException("Invalid request")
-                        },
+                Task
+                    .fromUpdateRequest(
+                        id = taskId,
+                        title = request.title,
+                        description = request.description
+                    ).getOrElse {
+                        throw IllegalArgumentException("Invalid request")
+                    }
             )
         val result =
             updateTaskUseCase.execute(input).getOrThrow {
@@ -46,19 +46,19 @@ class UpdateTaskController(
         return Response(
             taskId = result.taskId.toString(),
             title = result.title,
-            description = result.description,
+            description = result.description
         )
     }
 
     class Request(
         val title: String,
-        val description: String,
+        val description: String
     )
 
     // TODO: クラスや関数のスコープについて学習する
     class Response(
         val taskId: String,
         val title: String,
-        val description: String,
+        val description: String
     )
 }

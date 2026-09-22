@@ -60,28 +60,26 @@ class RegisterControllerTest :
                     result.andReturn().response.status shouldBe HttpStatus.BAD_REQUEST.value()
                 }
             }
-        },
+        }
     ) {
     class Request(
         val title: String,
-        val description: String,
+        val description: String
     )
 
     companion object {
         val objectMapper = ObjectMapper()
     }
 
-    private fun successRequest(): Request =
-        Request(
-            title = "Test Task",
-            description = "This is a test task.",
-        )
+    private fun successRequest(): Request = Request(
+        title = "Test Task",
+        description = "This is a test task."
+    )
 
-    private fun failRequest(): Request =
-        Request(
-            title = "Test Task aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            description = "This is a test task.",
-        )
+    private fun failRequest(): Request = Request(
+        title = "Test Task aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        description = "This is a test task."
+    )
 
     private fun buildSuccessMockMvc(): MockMvc {
         val registerTaskUseCase = mockk<RegisterTaskUseCase>()
@@ -89,7 +87,7 @@ class RegisterControllerTest :
 
         val registerController =
             RegisterController(
-                registerTaskUseCase = registerTaskUseCase,
+                registerTaskUseCase = registerTaskUseCase
             )
 
         return MockMvcBuilders.standaloneSetup(registerController).build()
@@ -101,7 +99,7 @@ class RegisterControllerTest :
 
         val registerController =
             RegisterController(
-                registerTaskUseCase = registerTaskUseCase,
+                registerTaskUseCase = registerTaskUseCase
             )
 
         return MockMvcBuilders.standaloneSetup(registerController).setControllerAdvice(TaskExceptionHandler()).build()
@@ -109,10 +107,9 @@ class RegisterControllerTest :
 
     private fun requestMockApi(
         mockMvc: MockMvc,
-        request: Request,
-    ): ResultActionsDsl =
-        mockMvc.post("/api/v1/tasks") {
-            contentType = MediaType.APPLICATION_JSON
-            content = objectMapper.writeValueAsString(request)
-        }
+        request: Request
+    ): ResultActionsDsl = mockMvc.post("/api/v1/tasks") {
+        contentType = MediaType.APPLICATION_JSON
+        content = objectMapper.writeValueAsString(request)
+    }
 }

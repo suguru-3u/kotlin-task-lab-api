@@ -8,7 +8,7 @@ import tasklab.core.task.port.TaskUpdateRepositoryPort
 
 @Repository
 class TaskUpdateJdbcAdapter(
-    private val jdbcTemplate: NamedParameterJdbcTemplate,
+    private val jdbcTemplate: NamedParameterJdbcTemplate
 ) : TaskUpdateRepositoryPort {
     override fun execute(task: Task) {
         val sql =

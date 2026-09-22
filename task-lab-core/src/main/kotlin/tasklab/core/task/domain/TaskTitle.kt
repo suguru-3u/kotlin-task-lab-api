@@ -2,7 +2,7 @@ package tasklab.core.task.domain
 
 @JvmInline
 value class TaskTitle(
-    val value: String,
+    val value: String
 ) {
     init {
         require(value.isNotEmpty()) { "Task title must not be empty" }

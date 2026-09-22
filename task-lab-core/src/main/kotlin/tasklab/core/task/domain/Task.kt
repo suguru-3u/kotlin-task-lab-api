@@ -6,43 +6,40 @@ import com.github.michaelbull.result.runCatching
 class Task private constructor(
     val id: TaskId,
     val title: TaskTitle,
-    val description: TaskDescription,
+    val description: TaskDescription
 ) {
     companion object {
         fun fromCreateRequest(
             title: String,
-            description: String,
-        ): Result<Task, Throwable> =
-            runCatching {
-                Task(
-                    id = TaskId.create(),
-                    title = TaskTitle(title),
-                    description = TaskDescription(description),
-                )
-            }
+            description: String
+        ): Result<Task, Throwable> = runCatching {
+            Task(
+                id = TaskId.create(),
+                title = TaskTitle(title),
+                description = TaskDescription(description)
+            )
+        }
 
         fun fromUpdateRequest(
             id: String,
             title: String,
-            description: String,
-        ): Result<Task, Throwable> =
-            runCatching {
-                Task(
-                    id = TaskId.fromString(id),
-                    title = TaskTitle(title),
-                    description = TaskDescription(description),
-                )
-            }
+            description: String
+        ): Result<Task, Throwable> = runCatching {
+            Task(
+                id = TaskId.fromString(id),
+                title = TaskTitle(title),
+                description = TaskDescription(description)
+            )
+        }
 
         fun fromRepository(
             id: String,
             title: String,
-            description: String,
-        ): Task =
-            Task(
-                id = TaskId.fromString(id),
-                title = TaskTitle(title),
-                description = TaskDescription(description),
-            )
+            description: String
+        ): Task = Task(
+            id = TaskId.fromString(id),
+            title = TaskTitle(title),
+            description = TaskDescription(description)
+        )
     }
 }

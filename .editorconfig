@@ -4,6 +4,12 @@
 root = true
 
 [*.{kt,kts}]
-indent_size = 4
-ij_kotlin_allow_trailing_comma = true
-ij_kotlin_allow_trailing_comma_on_call_site = true
+ktlint_code_style = intellij_idea
+ij_kotlin_spaces_around_equality_operators = true
+ij_continuation_indent_size = 4
+ij_kotlin_allow_trailing_comma_on_call_site = false
+ij_kotlin_allow_trailing_comma = false
+
+# TODO:Git hooks (Lefthook や Spotless) を使い、コミット時に自動で ktlintFormat を実行。
+
+

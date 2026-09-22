@@ -7,6 +7,6 @@ interface RegisterTaskUseCase {
     fun execute(input: Input): Result<Unit, RegisterTaskInteractor.FailureRegisterTask>
 
     class Input(
-        val task: Task,
+        val task: Task
     )
 }

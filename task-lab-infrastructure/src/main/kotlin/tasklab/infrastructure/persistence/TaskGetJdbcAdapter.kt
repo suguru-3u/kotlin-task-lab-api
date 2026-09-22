@@ -7,7 +7,7 @@ import tasklab.core.task.port.GetTasksRepositoryPort
 
 @Repository
 class TaskGetJdbcAdapter(
-    private val jdbcTemplate: NamedParameterJdbcTemplate,
+    private val jdbcTemplate: NamedParameterJdbcTemplate
 ) : GetTasksRepositoryPort {
     // TODO: なぜBIN_TO_UUIDが必要になる？
     override fun execute(): List<Task> {
@@ -20,7 +20,7 @@ class TaskGetJdbcAdapter(
             Task.fromRepository(
                 id = rs.getString("id"),
                 title = rs.getString("title"),
-                description = rs.getString("description"),
+                description = rs.getString("description")
             )
         }
     }

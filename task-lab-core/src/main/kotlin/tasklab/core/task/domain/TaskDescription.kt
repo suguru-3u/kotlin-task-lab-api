@@ -2,7 +2,7 @@ package tasklab.core.task.domain
 
 @JvmInline
 value class TaskDescription(
-    val value: String,
+    val value: String
 ) {
     init {
         require(value.trim().isNotEmpty()) { "Task description must not be empty" }

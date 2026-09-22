@@ -19,14 +19,13 @@ import tasklab.core.task.port.TaskRegisterRepositoryPort
  */
 @Named
 class RegisterTaskInteractor(
-    private val taskRegisterRepositoryPort: TaskRegisterRepositoryPort,
+    private val taskRegisterRepositoryPort: TaskRegisterRepositoryPort
 ) : RegisterTaskUseCase {
-    override fun execute(input: RegisterTaskUseCase.Input): Result<Unit, FailureRegisterTask> =
-        runCatching {
-            taskRegisterRepositoryPort.execute(task = input.task)
-        }.orElse {
-            Err(FailureRegisterTask)
-        }
+    override fun execute(input: RegisterTaskUseCase.Input): Result<Unit, FailureRegisterTask> = runCatching {
+        taskRegisterRepositoryPort.execute(task = input.task)
+    }.orElse {
+        Err(FailureRegisterTask)
+    }
 
     // TODO: こういった場合にsealdなのかobjectを使用するのか判断できるようになりたい
     data object FailureRegisterTask

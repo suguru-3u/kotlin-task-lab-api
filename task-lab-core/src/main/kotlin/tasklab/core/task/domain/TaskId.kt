@@ -4,7 +4,7 @@ import kotlin.uuid.Uuid
 
 @JvmInline
 value class TaskId private constructor(
-    val value: Uuid,
+    val value: Uuid
 ) {
     companion object {
         fun create(): TaskId = TaskId(Uuid.generateV7())

@@ -10,7 +10,7 @@ import kotlin.uuid.Uuid
 
 @Repository
 internal class TaskRegisterJdbcAdapter(
-    private val jdbcTemplate: NamedParameterJdbcTemplate,
+    private val jdbcTemplate: NamedParameterJdbcTemplate
 ) : TaskRegisterRepositoryPort {
     @Transactional
     override fun execute(task: Task) {

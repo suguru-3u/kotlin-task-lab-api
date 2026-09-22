@@ -10,12 +10,12 @@ interface UpdateTaskUseCase {
     fun execute(input: Input): Result<Output, UpdateTaskInteractor.FailureUpdateTask>
 
     class Input(
-        val task: Task,
+        val task: Task
     )
 
     class Output(
         val taskId: Uuid,
         val title: String,
-        val description: String,
+        val description: String
     )
 }

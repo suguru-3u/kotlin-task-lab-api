@@ -46,12 +46,11 @@ class RegisterTaskUseCaseTest :
         }
     })
 
-private fun createTaskRequest(): RegisterTaskUseCase.Input =
-    RegisterTaskUseCase.Input(
-        task =
-            Task
-                .fromCreateRequest(
-                    title = "test title",
-                    description = "test description",
-                ).getOrThrow(),
-    )
+private fun createTaskRequest(): RegisterTaskUseCase.Input = RegisterTaskUseCase.Input(
+    task =
+    Task
+        .fromCreateRequest(
+            title = "test title",
+            description = "test description"
+        ).getOrThrow()
+)

@@ -15,25 +15,25 @@ import tasklab.core.task.usecase.RegisterTaskUseCase
 @RestController
 @RequestMapping("/api/v1/tasks")
 class RegisterController(
-    val registerTaskUseCase: RegisterTaskUseCase,
+    val registerTaskUseCase: RegisterTaskUseCase
 ) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun execute(
-        @RequestBody request: Request,
+        @RequestBody request: Request
     ) {
         // TODO: ここの例外処理を見直す。controllerのadviceのクラスを作成する
         // TODO: ログにloggerを使用するようにしてもいいかもしれない
         val task =
             RegisterTaskUseCase.Input(
                 task =
-                    Task
-                        .fromCreateRequest(
-                            title = request.title,
-                            description = request.description,
-                        ).getOrElse {
-                            throw BadRequestException("Invalid request")
-                        },
+                Task
+                    .fromCreateRequest(
+                        title = request.title,
+                        description = request.description
+                    ).getOrElse {
+                        throw BadRequestException("Invalid request")
+                    }
             )
         registerTaskUseCase.execute(input = task).getOrThrow {
             throw IllegalArgumentException("Invalid request")
@@ -43,6 +43,6 @@ class RegisterController(
     // TODO: バリデーションエラーが発生した際にのエラーレスポンスをカスタマイズする
     class Request(
         val title: String,
-        val description: String,
+        val description: String
     )
 }

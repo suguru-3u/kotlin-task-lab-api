@@ -21,9 +21,9 @@ import org.springframework.boot.runApplication
  */
 @SpringBootApplication(
     scanBasePackages = [
-        "tasklab", // 自モジュール以外にもtask-lab-core、task-lab-infrastructureもスキャン対象にする
+        "tasklab" // 自モジュール以外にもtask-lab-core、task-lab-infrastructureもスキャン対象にする
 
-    ],
+    ]
 )
 class TaskLabApiApplication
 

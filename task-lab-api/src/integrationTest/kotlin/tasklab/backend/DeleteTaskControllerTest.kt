@@ -19,44 +19,44 @@ import java.util.UUID
 @AutoConfigureMockMvc
 class DeleteTaskControllerTest(
     val jdbcTemplate: JdbcTemplate,
-    val mockMvc: MockMvc,
+    val mockMvc: MockMvc
 ) : FreeSpec(
-        {
-            this as DeleteTaskControllerTest
+    {
+        this as DeleteTaskControllerTest
 
-            val taskId = "00000000-0000-7000-8000-000000000001"
+        val taskId = "00000000-0000-7000-8000-000000000001"
 
-            beforeSpec {
-                deleteTask()
-                registerTask(uuidToBinary16(taskId))
+        beforeSpec {
+            deleteTask()
+            registerTask(uuidToBinary16(taskId))
+        }
+
+        afterSpec {
+            deleteTask()
+        }
+
+        "正常系" - {
+            "タスクが削除できること" {
+                val before = getDBTask("Task 1")
+
+                // act
+                val result = mockMvc.delete("/api/v1/tasks/$taskId").andReturn()
+                val after = getDBTask("Task 1")
+
+                // verify　TODO: UUidと自動採番についてまとめて記事に投稿する
+                result.response.status shouldBe 204
+                after shouldBe before - 1
             }
-
-            afterSpec {
-                deleteTask()
-            }
-
-            "正常系" - {
-                "タスクが削除できること" {
-                    val before = getDBTask("Task 1")
-
-                    // act
-                    val result = mockMvc.delete("/api/v1/tasks/$taskId").andReturn()
-                    val after = getDBTask("Task 1")
-
-                    // verify　TODO: UUidと自動採番についてまとめて記事に投稿する
-                    result.response.status shouldBe 204
-                    after shouldBe before - 1
-                }
-            }
-        },
-    ) {
+        }
+    }
+) {
     private fun registerTask(taskId: ByteArray) {
         val sql = "INSERT INTO tasks (id, title, description) VALUES (?, ?, ?)"
         jdbcTemplate.update(
             sql,
             taskId,
             "Task 1",
-            "Description 1",
+            "Description 1"
         )
     }
 
@@ -73,10 +73,9 @@ class DeleteTaskControllerTest(
             .array()
     }
 
-    private fun getDBTask(title: String): Int =
-        jdbcTemplate.queryForObject(
-            "SELECT COUNT(*) FROM tasks WHERE title = ?",
-            Int::class.java,
-            title,
-        ) ?: 0
+    private fun getDBTask(title: String): Int = jdbcTemplate.queryForObject(
+        "SELECT COUNT(*) FROM tasks WHERE title = ?",
+        Int::class.java,
+        title
+    ) ?: 0
 }

@@ -31,7 +31,7 @@ class ArchitectureTest :
                 .resideInAnyPackage(
                     "org.springframework..",
                     "jakarta.persistence..",
-                    "com.fasterxml.jackson..",
+                    "com.fasterxml.jackson.."
                 ).check(importedClasses)
         }
 

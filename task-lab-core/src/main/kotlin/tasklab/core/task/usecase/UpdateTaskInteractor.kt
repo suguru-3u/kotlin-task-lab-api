@@ -12,7 +12,7 @@ import tasklab.core.task.port.TaskUpdateRepositoryPort
 @Named
 class UpdateTaskInteractor(
     private val taskFoundDomainService: TaskFoundDomainService,
-    private val taskUpdateRepositoryPort: TaskUpdateRepositoryPort,
+    private val taskUpdateRepositoryPort: TaskUpdateRepositoryPort
 ) : UpdateTaskUseCase {
     override fun execute(input: UpdateTaskUseCase.Input): Result<UpdateTaskUseCase.Output, FailureUpdateTask> {
         taskFoundDomainService.execute(input.task.id).onErr {
@@ -24,7 +24,7 @@ class UpdateTaskInteractor(
             UpdateTaskUseCase.Output(
                 input.task.id.value,
                 input.task.title.value,
-                input.task.description.value,
+                input.task.description.value
             )
         }.orElse {
             Err(FailureUpdateTask)

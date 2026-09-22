@@ -14,7 +14,7 @@ import kotlin.uuid.Uuid
 
 @Repository
 class TaskFoundJdbcAdapter(
-    private val jdbcTemplate: NamedParameterJdbcTemplate,
+    private val jdbcTemplate: NamedParameterJdbcTemplate
 ) : TaskFoundRepositoryPort {
     @Transactional
     override fun execute(taskId: TaskId): Task {
@@ -31,7 +31,7 @@ class TaskFoundJdbcAdapter(
             Task.fromRepository(
                 id = rs.getBytes("id").toUuid(),
                 title = rs.getString("title"),
-                description = rs.getString("description"),
+                description = rs.getString("description")
             )
         }
     }

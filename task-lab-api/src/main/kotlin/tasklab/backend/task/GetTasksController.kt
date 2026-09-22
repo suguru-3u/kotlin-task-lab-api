@@ -8,7 +8,7 @@ import tasklab.core.task.usecase.GetTasksUseCase
 @RestController
 @RequestMapping("/api/v1/tasks")
 class GetTasksController(
-    private val getTasksUseCase: GetTasksUseCase,
+    private val getTasksUseCase: GetTasksUseCase
 ) {
     @GetMapping
     fun execute(): List<GetTasksUseCase.Output> = getTasksUseCase.execute()

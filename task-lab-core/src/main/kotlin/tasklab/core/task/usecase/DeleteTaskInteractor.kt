@@ -12,7 +12,7 @@ import tasklab.core.task.port.DeleteTaskRepositoryPort
 @Named
 class DeleteTaskInteractor(
     private val taskFoundDomainService: TaskFoundDomainService,
-    private val deleteTaskRepositoryPort: DeleteTaskRepositoryPort,
+    private val deleteTaskRepositoryPort: DeleteTaskRepositoryPort
 ) : DeleteTaskUseCase {
     override fun execute(taskId: DeleteTaskUseCase.Input): Result<Unit, FailureDeleteTask> {
         // TODO:ここの存在チェックの処理は必要か検討する

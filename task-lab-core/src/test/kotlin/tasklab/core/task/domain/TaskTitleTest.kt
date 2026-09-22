@@ -12,8 +12,8 @@ class TaskTitleTest :
             withTests(
                 listOf(
                     ValidTitle("1文字の場合", "A"),
-                    ValidTitle("50文字の場合", "A".repeat(50)),
-                ),
+                    ValidTitle("50文字の場合", "A".repeat(50))
+                )
             ) { (_, input) ->
                 TaskTitle(input).value shouldBe input
             }
@@ -23,8 +23,8 @@ class TaskTitleTest :
             withTests(
                 listOf(
                     InvalidTitle("空文字の場合", "", "Task title must not be empty"),
-                    InvalidTitle("境界値の51文字の場合", "A".repeat(51), "Task title must not exceed 50"),
-                ),
+                    InvalidTitle("境界値の51文字の場合", "A".repeat(51), "Task title must not exceed 50")
+                )
             ) { (_, input, message) ->
                 shouldThrow<IllegalArgumentException> {
                     TaskTitle(input)
@@ -35,11 +35,11 @@ class TaskTitleTest :
 
 private data class ValidTitle(
     val label: String,
-    val input: String,
+    val input: String
 )
 
 private data class InvalidTitle(
     val label: String,
     val input: String,
-    val message: String,
+    val message: String
 )

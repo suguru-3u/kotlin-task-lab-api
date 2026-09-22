@@ -8,7 +8,7 @@ import tasklab.core.task.port.DeleteTaskRepositoryPort
 
 @Repository
 class DeleteTaskJdbcAdapter(
-    private val jdbcTemplate: NamedParameterJdbcTemplate,
+    private val jdbcTemplate: NamedParameterJdbcTemplate
 ) : DeleteTaskRepositoryPort {
     override fun execute(taskId: TaskId) {
         val sql =
