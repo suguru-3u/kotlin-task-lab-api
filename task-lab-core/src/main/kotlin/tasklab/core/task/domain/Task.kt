@@ -2,11 +2,13 @@ package tasklab.core.task.domain
 
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.runCatching
+import tasklab.core.task.domain.TaskStatus
 
 class Task private constructor(
     val id: TaskId,
     val title: TaskTitle,
-    val description: TaskDescription
+    val description: TaskDescription,
+    val status: TaskStatus
 ) {
     companion object {
         fun fromCreateRequest(
@@ -16,7 +18,8 @@ class Task private constructor(
             Task(
                 id = TaskId.create(),
                 title = TaskTitle(title),
-                description = TaskDescription(description)
+                description = TaskDescription(description),
+                status = TaskStatus.start()
             )
         }
 
@@ -28,7 +31,8 @@ class Task private constructor(
             Task(
                 id = TaskId.fromString(id),
                 title = TaskTitle(title),
-                description = TaskDescription(description)
+                description = TaskDescription(description),
+                status = TaskStatus.start()
             )
         }
 
@@ -39,7 +43,8 @@ class Task private constructor(
         ): Task = Task(
             id = TaskId.fromString(id),
             title = TaskTitle(title),
-            description = TaskDescription(description)
+            description = TaskDescription(description),
+            status = TaskStatus.start()
         )
     }
 }
