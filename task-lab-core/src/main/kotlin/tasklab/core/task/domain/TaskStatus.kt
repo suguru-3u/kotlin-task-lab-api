@@ -8,12 +8,20 @@ class TaskStatus private constructor(
 ) {
 
     enum class Status {
-        Start, Complete
+        Start, Complete, Reopen
     }
 
     companion object {
         fun start(): TaskStatus = TaskStatus(Status.Start)
     }
 
-    fun complete(): TaskStatus = TaskStatus(Status.Complete)
+    fun complete(): TaskStatus {
+        if (value != Status.Start) throw IllegalStateException("Task can only be completed from Start status.")
+        return TaskStatus(Status.Complete)
+    }
+
+    fun reopen(): TaskStatus {
+        if (value != Status.Complete) throw IllegalStateException("Task can only reopen in Start status.")
+        return TaskStatus(Status.Reopen)
+    }
 }
