@@ -1,14 +1,14 @@
 package tasklab.core.task.domain
 
-// taskのステータスを管理するクラス
-// スタートは外部から作成できて完了にする場合、関数を通してじゃないと完了にすることができない
-
-class TaskStatus private constructor(
+@JvmInline
+value class TaskStatus private constructor(
     val value: Status
 ) {
 
     enum class Status {
-        Start, Complete, Reopen
+        Start,
+        Complete,
+        Reopen
     }
 
     companion object {
@@ -16,12 +16,12 @@ class TaskStatus private constructor(
     }
 
     fun complete(): TaskStatus {
-        if (value != Status.Start) throw IllegalStateException("Task can only be completed from Start status.")
+        if (value == Status.Complete) throw IllegalStateException("Task can only be completed from Start status.")
         return TaskStatus(Status.Complete)
     }
 
     fun reopen(): TaskStatus {
-        if (value != Status.Complete) throw IllegalStateException("Task can only reopen in Start status.")
+        if (value == Status.Start || value == Status.Reopen) throw IllegalStateException("Task can only reopen in Start status.")
         return TaskStatus(Status.Reopen)
     }
 }
