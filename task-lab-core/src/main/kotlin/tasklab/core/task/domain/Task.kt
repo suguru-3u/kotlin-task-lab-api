@@ -3,12 +3,16 @@ package tasklab.core.task.domain
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.runCatching
 import tasklab.core.task.domain.TaskStatus
+import java.time.Instant
+import java.time.LocalDateTime
 
 class Task private constructor(
     val id: TaskId,
     val title: TaskTitle,
     val description: TaskDescription,
-    val status: TaskStatus
+    val status: TaskStatus,
+    val dueDate: TaskDueDate,
+    val priority: TaskPriority,
 ) {
     companion object {
         fun fromCreateRequest(
@@ -19,7 +23,9 @@ class Task private constructor(
                 id = TaskId.create(),
                 title = TaskTitle(title),
                 description = TaskDescription(description),
-                status = TaskStatus.start()
+                status = TaskStatus.start(),
+                dueDate = TaskDueDate(LocalDateTime.now()),
+                priority = TaskPriority.NORMAL,
             )
         }
 
@@ -32,7 +38,9 @@ class Task private constructor(
                 id = TaskId.fromString(id),
                 title = TaskTitle(title),
                 description = TaskDescription(description),
-                status = TaskStatus.start()
+                status = TaskStatus.start(),
+                dueDate = TaskDueDate(LocalDateTime.now()),
+                priority = TaskPriority.NORMAL,
             )
         }
 
@@ -44,7 +52,9 @@ class Task private constructor(
             id = TaskId.fromString(id),
             title = TaskTitle(title),
             description = TaskDescription(description),
-            status = TaskStatus.start()
+            status = TaskStatus.start(),
+            dueDate = TaskDueDate(LocalDateTime.now()),
+            priority = TaskPriority.NORMAL,
         )
     }
 }
