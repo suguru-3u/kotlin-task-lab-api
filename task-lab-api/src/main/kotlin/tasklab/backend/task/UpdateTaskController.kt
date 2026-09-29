@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import tasklab.core.task.domain.Task
 import tasklab.core.task.usecase.UpdateTaskUseCase
+import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
 
 @RestController
@@ -26,17 +27,21 @@ class UpdateTaskController(
     ): Response {
         // TODO: 音声入力を使用できるようにしてもいいかも
         // TODO: IDの値オブジェクトを作成して、Inputクラスを作成する
+        // TODO: リクエスト内容からデータを更新できるようにする,まずはfromUpdateRequestの改修
         val input =
             UpdateTaskUseCase.Input(
                 task =
-                Task
-                    .fromUpdateRequest(
-                        id = taskId,
-                        title = request.title,
-                        description = request.description
-                    ).getOrElse {
-                        throw IllegalArgumentException("Invalid request")
-                    }
+                    Task
+                        .fromUpdateRequest(
+                            id = taskId,
+                            title = request.title,
+                            description = request.description,
+                            status = request.status,
+                            dueDate = request.dueDate,
+                            priority = request.priority
+                        ).getOrElse {
+                            throw IllegalArgumentException("Invalid request")
+                        }
             )
         val result =
             updateTaskUseCase.execute(input).getOrThrow {
@@ -52,7 +57,10 @@ class UpdateTaskController(
 
     class Request(
         val title: String,
-        val description: String
+        val description: String,
+        val status: String,
+        val dueDate: String,
+        val priority: String
     )
 
     // TODO: クラスや関数のスコープについて学習する

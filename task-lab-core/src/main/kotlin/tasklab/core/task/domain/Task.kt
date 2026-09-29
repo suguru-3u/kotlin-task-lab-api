@@ -32,7 +32,10 @@ class Task private constructor(
         fun fromUpdateRequest(
             id: String,
             title: String,
-            description: String
+            description: String,
+            status: String,
+            dueDate: String,
+            priority: String,
         ): Result<Task, Throwable> = runCatching {
             Task(
                 id = TaskId.fromString(id),
