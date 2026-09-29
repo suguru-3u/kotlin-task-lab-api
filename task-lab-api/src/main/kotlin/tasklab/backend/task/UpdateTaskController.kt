@@ -2,14 +2,13 @@ package tasklab.backend.task
 
 import com.github.michaelbull.result.getOrElse
 import com.github.michaelbull.result.getOrThrow
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import tasklab.core.task.domain.Task
 import tasklab.core.task.usecase.UpdateTaskUseCase
-import java.time.LocalDateTime
 import kotlin.uuid.ExperimentalUuidApi
 
 @RestController
@@ -20,7 +19,7 @@ class UpdateTaskController(
     // TODO:スタイルガイドの導入を検討する
 
     @OptIn(ExperimentalUuidApi::class)
-    @PutMapping("/{taskId}")
+    @PatchMapping("/{taskId}")
     fun execute(
         @PathVariable taskId: String,
         @RequestBody request: Request
