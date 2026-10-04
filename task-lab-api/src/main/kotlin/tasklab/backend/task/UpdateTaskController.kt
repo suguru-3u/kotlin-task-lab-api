@@ -26,17 +26,16 @@ class UpdateTaskController(
         // TODO: IDの値オブジェクトを作成して、Inputクラスを作成する
         // TODO: リクエスト内容からデータを更新できるようにする,まずはfromUpdateRequestの改修
         val input = UpdateTaskUseCase.Input(
-            task = TaskChanges
-                .of(
-                    id = taskId,
-                    title = request.title,
-                    description = request.description,
-                    status = request.status,
-                    dueDate = request.dueDate,
-                    priority = request.priority
-                ).getOrElse {
-                    throw IllegalArgumentException("Invalid request")
-                }
+            task = TaskChanges.of(
+                id = taskId,
+                title = request.title,
+                description = request.description,
+                status = request.status,
+                dueDate = request.dueDate,
+                priority = request.priority
+            ).getOrElse {
+                throw IllegalArgumentException("Invalid request")
+            }
         )
         val result =
             updateTaskUseCase.execute(input).getOrThrow {
