@@ -12,6 +12,7 @@ value class TaskStatus private constructor(
     }
 
     companion object {
+        fun of(status: String) = TaskStatus(Status.valueOf(status))
         fun start(): TaskStatus = TaskStatus(Status.Start)
     }
 

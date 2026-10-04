@@ -2,8 +2,6 @@ package tasklab.core.task.domain
 
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.runCatching
-import tasklab.core.task.domain.TaskStatus
-import java.time.Instant
 import java.time.LocalDateTime
 
 class Task private constructor(
@@ -12,8 +10,21 @@ class Task private constructor(
     val description: TaskDescription,
     val status: TaskStatus,
     val dueDate: TaskDueDate,
-    val priority: TaskPriority,
+    val priority: TaskPriority
 ) {
+    fun update(
+        change: TaskChanges
+    ): Result<Task, Throwable> = runCatching {
+        Task(
+            id = change.id,
+            title = change.title ?: this.title,
+            description = change.description ?: this.description,
+            status = TaskStatus.start(),
+            dueDate = change.dueDate ?: this.dueDate,
+            priority = change.priority ?: this.priority
+        )
+    }
+
     companion object {
         fun fromCreateRequest(
             title: String,
@@ -25,25 +36,7 @@ class Task private constructor(
                 description = TaskDescription(description),
                 status = TaskStatus.start(),
                 dueDate = TaskDueDate(LocalDateTime.now()),
-                priority = TaskPriority.NORMAL,
-            )
-        }
-
-        fun fromUpdateRequest(
-            id: String,
-            title: String,
-            description: String,
-            status: String,
-            dueDate: String,
-            priority: String,
-        ): Result<Task, Throwable> = runCatching {
-            Task(
-                id = TaskId.fromString(id),
-                title = TaskTitle(title),
-                description = TaskDescription(description),
-                status = TaskStatus.start(),
-                dueDate = TaskDueDate(LocalDateTime.now()),
-                priority = TaskPriority.NORMAL,
+                priority = TaskPriority.NORMAL
             )
         }
 
@@ -57,7 +50,7 @@ class Task private constructor(
             description = TaskDescription(description),
             status = TaskStatus.start(),
             dueDate = TaskDueDate(LocalDateTime.now()),
-            priority = TaskPriority.NORMAL,
+            priority = TaskPriority.NORMAL
         )
     }
 }

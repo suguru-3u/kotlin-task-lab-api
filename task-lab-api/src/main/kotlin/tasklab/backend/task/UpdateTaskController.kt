@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import tasklab.core.task.domain.Task
+import tasklab.core.task.domain.TaskChanges
 import tasklab.core.task.usecase.UpdateTaskUseCase
 import kotlin.uuid.ExperimentalUuidApi
 
@@ -16,8 +16,6 @@ import kotlin.uuid.ExperimentalUuidApi
 class UpdateTaskController(
     private val updateTaskUseCase: UpdateTaskUseCase
 ) {
-    // TODO:スタイルガイドの導入を検討する
-
     @OptIn(ExperimentalUuidApi::class)
     @PatchMapping("/{taskId}")
     fun execute(
@@ -27,21 +25,19 @@ class UpdateTaskController(
         // TODO: 音声入力を使用できるようにしてもいいかも
         // TODO: IDの値オブジェクトを作成して、Inputクラスを作成する
         // TODO: リクエスト内容からデータを更新できるようにする,まずはfromUpdateRequestの改修
-        val input =
-            UpdateTaskUseCase.Input(
-                task =
-                    Task
-                        .fromUpdateRequest(
-                            id = taskId,
-                            title = request.title,
-                            description = request.description,
-                            status = request.status,
-                            dueDate = request.dueDate,
-                            priority = request.priority
-                        ).getOrElse {
-                            throw IllegalArgumentException("Invalid request")
-                        }
-            )
+        val input = UpdateTaskUseCase.Input(
+            task = TaskChanges
+                .of(
+                    id = taskId,
+                    title = request.title,
+                    description = request.description,
+                    status = request.status,
+                    dueDate = request.dueDate,
+                    priority = request.priority
+                ).getOrElse {
+                    throw IllegalArgumentException("Invalid request")
+                }
+        )
         val result =
             updateTaskUseCase.execute(input).getOrThrow {
                 throw IllegalArgumentException("Invalid request")
