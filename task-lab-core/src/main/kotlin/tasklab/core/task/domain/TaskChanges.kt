@@ -2,7 +2,7 @@ package tasklab.core.task.domain
 
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.runCatching
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 class TaskChanges private constructor(
     val id: TaskId,
@@ -18,7 +18,7 @@ class TaskChanges private constructor(
             title: String?,
             description: String?,
             status: String?,
-            dueDate: String?,
+            dueDate: LocalDate?,
             priority: String?
         ): Result<TaskChanges, Throwable> = runCatching {
             TaskChanges(
@@ -26,7 +26,7 @@ class TaskChanges private constructor(
                 title = title?.let { TaskTitle(it) },
                 description = description?.let { TaskDescription(it) },
                 status = status?.let { TaskStatus.of(it) },
-                dueDate = dueDate?.let { TaskDueDate(LocalDateTime.now()) },
+                dueDate = dueDate?.let { TaskDueDate(dueDate) },
                 priority = priority?.let { TaskPriority.valueOf(it) }
             )
         }

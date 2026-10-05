@@ -1,6 +1,6 @@
 package tasklab.core.task.domain
 
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 @JvmInline
-value class TaskDueDate(val value: LocalDateTime)
+value class TaskDueDate(val value: LocalDate)
