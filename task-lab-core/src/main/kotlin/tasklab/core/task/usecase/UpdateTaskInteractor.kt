@@ -22,9 +22,7 @@ class UpdateTaskInteractor(
         return taskFoundDomainService.execute(input.task.id).mapError {
             FailureUpdateTask
         }.andThen { recordTask ->
-            recordTask.update(input.task)
-        }.mapError {
-            FailureUpdateTask
+            recordTask.update(input.task).mapError { FailureUpdateTask }
         }.andThen { updateTask ->
             runCatching {
                 taskUpdateRepositoryPort.execute(updateTask)

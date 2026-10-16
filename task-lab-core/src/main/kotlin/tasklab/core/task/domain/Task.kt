@@ -2,7 +2,7 @@ package tasklab.core.task.domain
 
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.runCatching
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 class Task private constructor(
     val id: TaskId,
@@ -35,7 +35,7 @@ class Task private constructor(
                 title = TaskTitle(title),
                 description = TaskDescription(description),
                 status = TaskStatus.start(),
-                dueDate = TaskDueDate(LocalDateTime.now()),
+                dueDate = TaskDueDate(LocalDate.now()),
                 priority = TaskPriority.NORMAL
             )
         }
@@ -49,7 +49,7 @@ class Task private constructor(
             title = TaskTitle(title),
             description = TaskDescription(description),
             status = TaskStatus.start(),
-            dueDate = TaskDueDate(LocalDateTime.now()),
+            dueDate = TaskDueDate(LocalDate.now()),
             priority = TaskPriority.NORMAL
         )
     }
