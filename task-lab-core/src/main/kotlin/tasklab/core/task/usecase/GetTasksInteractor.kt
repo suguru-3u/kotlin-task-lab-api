@@ -8,11 +8,14 @@ import tasklab.core.task.usecase.GetTasksUseCase.Output
 class GetTasksInteractor(
     private val getTasksRepositoryPort: GetTasksRepositoryPort
 ) : GetTasksUseCase {
-    override fun execute(): List<Output> = getTasksRepositoryPort.execute().map {
-        Output(
-            id = it.id.value.toString(),
-            title = it.title.value,
-            description = it.description.value
-        )
+    override fun execute(input: GetTasksUseCase.Input): List<Output> {
+        val input = GetTasksRepositoryPort.Input(input.taskStatus)
+        return getTasksRepositoryPort.execute(input).map {
+            Output(
+                id = it.id.value.toString(),
+                title = it.title.value,
+                description = it.description.value
+            )
+        }
     }
 }
