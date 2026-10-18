@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.kotlin.reflect)
     implementation(libs.jackson.module.kotlin)
     implementation(libs.kotlin.result)
+    implementation(libs.spring.security.starter)
     implementation(project(":task-lab-core"))
     runtimeOnly(project(":task-lab-infrastructure"))
     developmentOnly(libs.spring.boot.devtools)

@@ -58,4 +58,7 @@ kotest-extensions-spring = { module = "io.kotest:kotest-extensions-spring", vers
 
 kotlin-ktlint = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint" }
 
+# Spring Securty 用 Spring Boot BOMによるバージョン管理のため version は書かない
+spring-security-starter = { module = "org.springframework.boot:spring-boot-starter-security" }
+
 [bundles]    # 複数ライブラリのグループ化。1行でまとめて依存追加できる
