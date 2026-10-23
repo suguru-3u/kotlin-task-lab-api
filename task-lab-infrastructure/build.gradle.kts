@@ -25,6 +25,7 @@ dependencies {
     api(platform(libs.spring.boot.dependencies)) // バージョン管理のみ。Boot プラグインは適用しない
     api(project(":task-lab-core")) // ポート型がシグネチャに出るので api
 
+    implementation(libs.spring.security.crypto)
     implementation(libs.spring.boot.starter.jdbc) // JdbcTemplate / NamedParameterJdbcTemplate / HikariCP / spring-tx
     implementation(libs.spring.boot.starter.flyway)
     runtimeOnly(libs.flyway.mysql)
